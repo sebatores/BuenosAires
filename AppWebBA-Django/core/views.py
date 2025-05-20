@@ -44,7 +44,7 @@ def cerrar_sesion(request):
 
 def tienda(request):
 
-    response = requests.get('http://127.0.0.1:8000/BuenosAiresApiRest/obtener_equipos_en_bodega')
+    response = requests.get('http://127.0.0.1:8001/BuenosAiresApiRest/obtener_equipos_en_bodega')
 
     if response.status_code == 200:
         data = {"list": response.json()}
@@ -75,6 +75,8 @@ def tienda(request):
 @csrf_exempt
 def ficha(request, id):
     data = {"mesg": "", "producto": None}
+    
+    response = requests.get('http://127.0.0.1:8001/BuenosAiresApiRest/obtener_equipos_en_bodega')
 
     # Cuando el usuario hace clic en el boton COMPRAR, se ejecuta el METODO POST del
     # formulario de ficha.html, con lo cual se redirecciona la página para que
@@ -94,7 +96,17 @@ def ficha(request, id):
     # Si visitamos la URL de FICHA y la pagina no nos envia un METODO POST, 
     # quiere decir que solo debemos fabricar la pagina y devolvera al browser
     # para que se muestren los datos de la FICHA
-    data["producto"] = Producto.objects.get(idprod=id)
+    precio_usd = obtener_valor_usd()
+    
+    producto = Producto.objects.get(idprod=id)
+
+    precio_clp = producto.precio
+    precio_en_usd = round(precio_clp * precio_usd, 2) if precio_usd != 0 else 0
+    
+    data["precio_usd"] = precio_en_usd
+    data["producto"] = producto
+    
+    
     return render(request, "core/ficha.html", data)
 
 @csrf_exempt
@@ -264,3 +276,17 @@ def ingresar_solicitud_servicio(request):
 def miscompras(request):
 
     return render(request, "core/facturas.html")
+
+def obtener_valor_usd():
+    url = 'https://api.exchangerate-api.com/v4/latest/CLP'
+    
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            datos = response.json()
+            valor_usd = datos['rates']['USD']
+            print('Valor USD desde la API:', valor_usd)
+            return valor_usd
+    except:
+        pass
+    return 0
