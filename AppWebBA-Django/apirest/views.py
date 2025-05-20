@@ -98,18 +98,22 @@ def obtener_equipos_en_bodega(request):
         # Convertir los resultados en una lista de diccionarios
         data = []
         for row in results:
-            idstock = row[0]
-            idprod = row[1]
-            nomprod = row[2]
-            nrofac = row[3]
-            estado = row[4]
+            idprod = row[0]
+            nomprod = row[1]
+            descprod = row[2]
+            precio = row[3]
+            imagen = row[4]
+            cantidad = row[5]
+            disponibilidad = row[6]
 
             data.append({
-                'idstock': idstock,
                 'idprod': idprod,
                 'nomprod': nomprod,
-                'nrofac': nrofac,
-                'estado': estado
+                'descprod': descprod,
+                'precio': precio,
+                'imagen': imagen,
+                'cantidad': cantidad,
+                'disponibilidad': disponibilidad
             })
 
         # Devolver los datos como respuesta JSON

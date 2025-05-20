@@ -43,7 +43,13 @@ def cerrar_sesion(request):
     return redirect(home)
 
 def tienda(request):
-    data = {"list": Producto.objects.all().order_by('idprod')}
+
+    response = requests.get('http://127.0.0.1:8000/BuenosAiresApiRest/obtener_equipos_en_bodega')
+
+    if response.status_code == 200:
+        data = {"list": response.json()}
+    else:
+        data = {"list": []}
     return render(request, "core/tienda.html", data)
 
 # https://www.transbankdevelopers.cl/documentacion/como_empezar#como-empezar

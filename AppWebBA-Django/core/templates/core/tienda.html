@@ -20,6 +20,8 @@
             </div>
             <ul class="list-group list-group-flush card-ul">
               <li class="list-group-item card-ul"> Precio: ${{ producto.precio }} </li>
+              <li class="list-group-item card-ul"> Cantidad: {{ producto.cantidad }} unidad(es)</li>
+              <li class="list-group-item card-ul"> {{ producto.disponibilidad }}</li>
             </ul>
             <div class="card-body">
                 <a type="button" class="btn btn-primary" href="{% url 'ficha' producto.idprod %}">Comprar</a>
