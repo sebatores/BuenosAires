@@ -1,0 +1,37 @@
+h1 {
+    text-align: center !important;
+    color: blue !important;
+}
+
+.centrar {
+    text-align: center;
+}
+
+.borde_formulario {
+    border-radius: 10px;
+    border: 2px solid  #1da5ff; 
+    padding-top: 20px; 
+    padding-bottom: 20px;
+}
+
+.cuadro_formulario {
+    background-color: #a7dcff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+    font-weight: bold;
+}
+
+label { 
+    width: 100px;
+    text-align: left;
+}
+
+input {
+    width: 150px;
+}
+
+#form_message {
+    margin-top: 20px;
+}

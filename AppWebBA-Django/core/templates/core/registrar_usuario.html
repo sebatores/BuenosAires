@@ -1,0 +1,43 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block stylesheet %}
+    <link href="{% static 'core/css/registrar_usuario.css'%}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="container text-center">
+        <h1 style="color: blue !important; font-weight: bolder;">Registrar de Cliente</h1>
+        
+        
+        
+        <form method="POST">
+            <div class="container-fluid justify-content-center registrar_formulario">
+
+                <div class="row d-flex">
+
+                    <div class="col-sm-12 col-md-8 col-lg-12">
+                        {% csrf_token %} 
+                        {{ form.as_p }}
+
+                        <div class="btn_guardar">
+                            <button class="btn btn-success formulario_boton btn-lg" type="submit">Guardar</button>
+                            <button class="btn btn-light formulario_boton btn-lg" type="submit">Limpiar</button>
+                        </div>
+                        {% if mesg %}
+                        <div id="form_message" class="alert alert-danger" role="alert">{{ mesg }}</div>
+                        {% endif %}
+
+                    </div>
+                </div>
+                
+                
+                
+                
+            </div>
+        </form>
+    
+    
+    
+    </div>
+{% endblock content %}

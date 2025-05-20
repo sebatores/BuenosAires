@@ -1,0 +1,29 @@
+.formulario_solicitud {
+    background-color: #a7dcff;
+    border-radius: 10px;
+    text-align: left;
+    margin:auto;
+    border: 2px solid  #1da5ff; 
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 1000px;
+}
+
+label {
+    width: 190px;
+    font-weight: 600;
+    text-align: left;
+}
+
+.formulario_botones {
+    margin-top: 20px;
+    text-align: center !important;
+    justify-content: center;
+}
+
+.formulario_boton {
+    
+    border-radius: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ID="8b45cd72-1502-4617-bd37-fc966cee391f" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:54096/WsProducto.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="WsProducto.xsd" MetadataType="Schema" ID="35ee4848-552a-4015-8407-2a6037d3efba" SourceId="1" SourceUrl="http://localhost:54096/WsProducto.svc?xsd=xsd1" />
+    <MetadataFile FileName="WsProducto1.xsd" MetadataType="Schema" ID="1c7ea56b-a979-459a-9fc4-fbe5c8eb2a78" SourceId="1" SourceUrl="http://localhost:54096/WsProducto.svc?xsd=xsd2" />
+    <MetadataFile FileName="WsProducto.wsdl" MetadataType="Wsdl" ID="44964125-835a-4d1b-a0ee-6f1702772f01" SourceId="1" SourceUrl="http://localhost:54096/WsProducto.svc?wsdl" />
+    <MetadataFile FileName="WsProducto.disco" MetadataType="Disco" ID="b31b8850-8985-4c0f-b91d-dbb4520b3d4c" SourceId="1" SourceUrl="http://localhost:54096/WsProducto.svc?disco" />
+    <MetadataFile FileName="WsProducto2.xsd" MetadataType="Schema" ID="735818b4-1a1c-489c-a104-eecbc9284a44" SourceId="1" SourceUrl="http://localhost:54096/WsProducto.svc?xsd=xsd0" />
+    <MetadataFile FileName="WsProducto3.xsd" MetadataType="Schema" ID="b99a5a7a-caf6-45fd-b10b-557a04a8ff7c" SourceId="1" SourceUrl="http://localhost:54096/WsProducto.svc?xsd=xsd3" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

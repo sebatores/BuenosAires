@@ -1,0 +1,59 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block stylesheet %}
+    <link href="{% static 'core/css/ingresar_solicitud_servicio.css'%}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+    <div class="container text-center">
+        <h1>Ingresar una Solicitud de Servicio</h1>
+        <div class="row d-flex formulario_solicitud" >
+            <div class="mb-3 row" >
+                <label for="staticEmail" class="col-sm-2 col-form-label">Precio de la visita</label>
+                <div class="col-sm-3">
+                    <input type="text" id="disabledTextInput" class="form-control" value="$25.000" disabled>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="inputPassword" class="col-sm-2 col-form-label">Tipo de solicitud</label>
+                <div class="col-sm-4">
+                    <select class="form-select" aria-label="Default select example">
+                        <option selected>Mantención</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                      </select>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="inputPassword" class="col-sm-2 col-form-label">Descripcion</label>
+                <div class="col-sm-4">
+                    <textarea class="form-control" rows="4" value="Necesito una mantencion preventiva para mi Aire Acondicionado WIFI 9.000 BTU. Lo tengo hace 2 anos y me gustaria hacerle una limpieza"></textarea>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="inputPassword" class="col-sm-2 col-form-label">Fecha de la visita</label>
+                <div class="col-sm-3">
+                    <input type="" class="form-control" value="25/02/2022">
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="inputPassword" class="col-sm-2 col-form-label">Hora de la visita</label>
+                <div class="col-sm-3">
+                    <input type="" class="form-control" value="09:00">
+                </div>
+            </div>
+
+            <div class="formulario_botones">
+                
+                <button class="btn btn-success formulario_boton btn-lg" type="submit">Pagar</button>
+                <button class="btn btn-light formulario_boton btn-lg" type="submit">Limpiar</button>
+                
+            </div>
+
+        </div>
+           
+    </div>
+{% endblock content %}

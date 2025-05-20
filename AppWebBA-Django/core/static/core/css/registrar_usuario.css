@@ -1,0 +1,44 @@
+h1 {
+    margin-top: 30px;
+    margin-bottom: 50px;
+    color: blue !important;
+}
+
+label {
+    width: 190px;
+    font-weight: 600;
+    text-align: left;
+}
+
+input {
+    width: 300px;
+}
+
+.helptext {
+    float: center;
+    /* display: none !important; */
+}
+
+.btn_guardar {
+    margin-top: 40px;
+    text-align: center !important;
+    justify-content: center;
+}
+
+.registrar_formulario {
+    text-align: left;
+    margin:auto;
+    width: auto;
+    height: auto;
+    background-color: #a7dcff;
+    padding: 15px;
+    border-radius: 10px;
+    border: 2px solid  #1da5ff; 
+}
+
+.formulario_boton {
+    
+    border-radius: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+}

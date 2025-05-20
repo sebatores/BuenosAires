@@ -1,0 +1,191 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block stylesheet %}
+    <link href="{% static 'core/css/home.css'%}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <div class="text-center">
+        <h1 style="color: blue !important; font-weight: bolder;">
+            Historial de Ventas de la Empresa
+        </h1>
+        <table class="table table-primary table-hover table-bordered border-dark">
+            <theader>
+                <th>Nro Fac</th>
+                <th>Cliente</th>
+                <th>Fecha</th>
+                <th>Descripción</th>
+                <th>Monto</th>
+                <th>Nro GD</th>
+                <th>Estado GD</th>
+                <th>Nro SS</th>
+                <th>Estado SS</th>
+            </theader>
+            <tbody>
+
+
+
+                <tr class="table-secondary table-bordered border-dark">
+                    <td>1</td>
+                    <td>Ana Torres</td>
+                    <td>23-02-2022</td>
+                    <td>Aire Wifi 9000 btu</td>
+                    <td>25000</td>
+                    <td>11</td>
+                    <td>Entregado</td>
+                    <td>111</td>
+                    <td>Cerrada</td>
+                  </tr>
+                  <tr class="table-light table-bordered border-dark">
+                    <td>2</td>
+                    <td>Juan Pérez</td>
+                    <td>24-02-2022</td>
+                    <td>Split Inv 12000 btu</td>
+                    <td>450000</td>
+                    <td>22</td>
+                    <td>Despachado</td>
+                    <td>222</td>
+                    <td>Aceptada</td>
+                  </tr>
+                  <tr class="table-secondary table-bordered border-dark">
+                    <td>3</td>
+                    <td>Mario Ayala</td>
+                    <td>03-03-2022</td>
+                    <td>Anwo Portátil</td>
+                    <td>25000</td>
+                    <td>No aplica</td>
+                    <td>No aplica</td>
+                    <td>333</td>
+                    <td>Aceptada</td>
+                  </tr>
+                  <tr class="table-light table-bordered border-dark">
+                    <td>4</td>
+                    <td>John Soto</td>
+                    <td>08-03-2022</td>
+                    <td>Anwo Portátil</td>
+                    <td>25000</td>
+                    <td>No aplica</td>
+                    <td>No aplica</td>
+                    <td>444</td>
+                    <td>Aceptada</td>
+                  </tr>
+                  <tr class="table-secondary table-bordered border-dark">
+                    <td>5</td>
+                    <td>Pedro Mora</td>
+                    <td>15-03-2022</td>
+                    <td>Anwo Portátil</td>
+                    <td>25000</td>
+                    <td>No aplica</td>
+                    <td>No aplica</td>
+                    <td>555</td>
+                    <td>Aceptada</td>
+                  </tr>
+                  <tr class="table-light table-bordered border-dark">
+                    <td>6</td>
+                    <td>Ana Torres</td>
+                    <td>27-03-2022</td>
+                    <td>Mantención</td>
+                    <td>25000</td>
+                    <td>No aplica</td>
+                    <td>No aplica</td>
+                    <td>666</td>
+                    <td>Cerrada</td>
+                  </tr>
+                  <tr class="table-secondary table-bordered border-dark">
+                    <td>7</td>
+                    <td>Ana Torres</td>
+                    <td>03-04-2022</td>
+                    <td>GPORT-14</td>
+                    <td>25000</td>
+                    <td>No aplica</td>
+                    <td>No aplica</td>
+                    <td>777</td>
+                    <td>Modificada</td>
+                  </tr>
+                  <tr class="table-light table-bordered border-dark">
+                    <td>8</td>
+                    <td>Ana Torres</td>
+                    <td>08-04-2022</td>
+                    <td>Anwo VP</td>
+                    <td>25000</td>
+                    <td>88</td>
+                    <td>EnBodega</td>
+                    <td>888</td>
+                    <td>Modificada</td>
+                  </tr>
+                  <tr class="table-secondary table-bordered border-dark">
+                    <td>9</td>
+                    <td>Ana Torres</td>
+                    <td>15-04-2022</td>
+                    <td>GPORT-14</td>
+                    <td>25000</td>
+                    <td>No aplica</td>
+                    <td>Aceptada</td>
+                    <td>999</td>
+                    <td>Aceptada</td>
+                  </tr>
+
+
+
+
+                {% comment %} <tr class="table-secondary table-bordered border-dark">
+                    <td>1</td>
+                    <td>Ana Torres</td>
+                    <td>23-02-2022</td>
+                    <td>Aire Wifi 9000 btu</td>
+                    <td>25000</td>
+                    <td>11</td>
+                    <td>Entregado</td>
+                    <td>111</td>
+                </tr>
+
+                <tr class="table-light table-bordered border-dark">
+                    <td>6</td>
+                    <td>Ana Torres</td>
+                    <td>27-03-2022</td>
+                    <td>Mantencion</td>
+                    <td>25000</td>
+                    <td>No aplica</td>
+                    <td>No aplica</td>
+                    <td>666</td>
+                </tr>
+
+                <tr class="table-secondary table-bordered border-dark">
+                    <td>7</td>
+                    <td>Ana Torres</td>
+                    <td>03-04-2022</td>
+                    <td>GPORT-14</td>
+                    <td>25000</td>
+                    <td>No aplica</td>
+                    <td>No aplica</td>
+                    <td>777</td>
+                </tr>
+
+                <tr class="table-light table-bordered border-dark">
+                    <td>8</td>
+                    <td>Ana Torres</td>
+                    <td>08-04-2022</td>
+                    <td>Anwo VP</td>
+                    <td>25000</td>
+                    <td>88</td>
+                    <td>En Bodega</td>
+                    <td>888</td>
+                </tr>
+
+                <tr class="table-secondary table-bordered border-dark">
+                    <td>9</td>
+                    <td>Ana Torres</td>
+                    <td>15-04-2022</td>
+                    <td>GPORT-14</td>
+                    <td>25000</td>
+                    <td>No aplica</td>
+                    <td>Aceptada</td>
+                    <td>999</td>
+                </tr> {% endcomment %}
+
+            </tbody>
+        </table>
+
+    </div>
+{% endblock content %}

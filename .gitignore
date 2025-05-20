@@ -1,0 +1,25 @@
+# ===================================
+# VISUAL STUDIO / C#
+# ===================================
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Directorios de compilación
+bin/
+obj/
+
+# Archivos temporales y de caché
+*.cache
+*.log
+*.tmp
+*.bak
+*.old
+
+# ===================================
+# SISTEMA / ARCHIVOS COMUNES A IGNORAR
+# ===================================
+Thumbs.db
+.DS_Store

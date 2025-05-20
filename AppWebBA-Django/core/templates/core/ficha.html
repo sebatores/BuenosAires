@@ -1,0 +1,49 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block stylesheet %}
+    <link href="{% static 'core/css/forms.css'%}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+    <h1 style="color: blue !important; font-weight: bolder;">Ficha de Producto</h1>
+    <div class="container-fluid" >
+        <div class="row ficha_producto">
+            <div class="mx-auto col-sm-12 col-md-6 col-lg-6 col-xl-6 ficha_auto_recuadro">
+                <img src="/media/{{ producto.imagen }}" class="ficha_auto_imagen" alt="">
+            </div>
+            <div class="mx-auto col-sm-12 col-md-6 col-lg-6 col-xl-6 ficha_datos_recuadro">
+                <h2 class="ficha_titulo">
+                    {{ producto.nomprod }}<br><br>
+                </h2>
+                <p class="ficha_descripcion">
+                    {{ producto.descprod }}
+                </p>
+                <br>
+                <h4>
+                    Precio CLP: ${{ producto.precio }}
+                </h4>
+                <br>
+                <h4>
+                    Precio USD: $300<br>
+                    <!-- <span style="color: red; font-weight: bolder; font-size: 40px;">
+                    [>>PONER AQUI EL PRECIO DEL PRODUCTO <br>
+                    CONVERTIDO A DOLARES DE EEUU <br>
+                    USANDO UNA API BANCARIA<<]
+                    </span> -->
+                </h4>
+                <br>
+                <form method="POST" class="asd">
+                    <input type="submit" class="btn btn-success btn-lg ficha_boton" value="Comprar">
+                    {% if mesg %}
+                        <div id="form_message" class="alert alert-danger" role="alert">{{ mesg }}</div>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+    <div style="margin-top: 20px; text-align: center;">
+        <a href="{% url 'tienda' %}" class="btn btn-secondary btn-mb tienda_boton">Ir a la tienda</a>&nbsp;&nbsp;&nbsp;
+        <a href="{% url 'home' %}" class="btn btn-primary btn-mb tienda_boton">Ir a la página de inicio</a>
+    </div>
+{% endblock content %}
