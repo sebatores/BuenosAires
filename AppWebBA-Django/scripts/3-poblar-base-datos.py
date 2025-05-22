@@ -86,9 +86,91 @@ BEGIN
 END
 """
 
-# SP_OBTENER_FACTURAS = """
+SP_OBTENER_FACTURAS = """
+CREATE PROCEDURE [dbo].[SP_OBTENER_FACTURAS]
+	@tipousu VARCHAR(50),
+	@rut     VARCHAR(20)
+ 
+AS
+BEGIN
+	SET NOCOUNT ON;
 
-# """
+	IF (@tipousu = 'Cliente')
+		SELECT
+        fac.nrofac,
+        usucli.first_name + ' '  + usucli.last_name AS nomcli,
+        fac.fechafac,
+        fac.descfac,
+        fac.monto,
+        ss.nrosol,
+        ss.estadosol
+        FROM FACTURA fac
+        INNER JOIN PerfilUsuario      percli ON fac.rutcli = percli.rut
+        INNER JOIN auth_user          usucli ON percli.user_id =  usucli.id
+        LEFT JOIN SolicitudServicio ss ON fac.nrofac = ss.nrofac
+        WHERE rutcli = @rut
+        ORDER BY fac.nrofac;
+
+	IF (@tipousu = 'Administrador')
+		SELECT
+        fac.nrofac,
+        usucli.first_name + ' '  + usucli.last_name AS nomcli,
+        fac.fechafac,
+        fac.descfac,
+        fac.monto,
+        ss.nrosol,
+        ss.estadosol
+        FROM FACTURA fac
+        INNER JOIN PerfilUsuario      percli ON fac.rutcli = percli.rut
+        INNER JOIN auth_user          usucli ON percli.user_id =  usucli.id
+        LEFT JOIN SolicitudServicio ss ON fac.nrofac = ss.nrofac
+        ORDER BY fac.nrofac;
+
+END
+"""
+
+SP_OBTENER_GUIAS_DE_DESPACHO = """
+CREATE PROCEDURE [dbo].[SP_OBTENER_GUIAS_DE_DESPACHO]
+    @tipousu VARCHAR(50),
+    @rut     VARCHAR(20)
+
+AS
+BEGIN
+
+    SET NOCOUNT ON;
+    
+    IF (@tipousu = 'Cliente')
+        SELECT
+        CASE 
+            WHEN gd.nrogd IS NULL THEN 'No aplica'
+            ELSE CAST(gd.nrogd AS VARCHAR(20))
+        END AS nrogd,
+        CASE 
+            WHEN gd.estadogd IS NULL THEN 'No aplica'
+            ELSE CAST(gd.estadogd AS VARCHAR(20)) 
+        END AS estadogd
+        FROM FACTURA fac
+        LEFT JOIN GuiaDespacho gd ON fac.nrofac = gd.nrofac
+        WHERE fac.rutcli = @rut
+        ORDER BY fac.nrofac
+    
+    IF (@tipousu = 'Administrador')
+    
+        SELECT
+        CASE 
+            WHEN gd.nrogd IS NULL THEN 'No aplica'
+            ELSE CAST(gd.nrogd AS VARCHAR(20))
+        END AS nrogd,
+        CASE 
+            WHEN gd.estadogd IS NULL THEN 'No aplica'
+            ELSE CAST(gd.estadogd AS VARCHAR(20)) 
+        END AS estadogd
+        FROM FACTURA fac
+        LEFT JOIN GuiaDespacho gd ON fac.nrofac = gd.nrofac
+        ORDER BY fac.nrofac
+
+END
+"""
 
 # SP_ACTUALIZAR_SOLICITUD_DE_SERVICIO = """
 
@@ -359,6 +441,11 @@ def run():
 
     try:
         exec_sql(SP_CREAR_GUIA_DESPACHO)
+    except:
+        pass
+    
+    try:
+        exec_sql(SP_OBTENER_FACTURAS)
     except:
         pass
 

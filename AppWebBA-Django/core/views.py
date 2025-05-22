@@ -402,8 +402,58 @@ def ingresar_solicitud_servicio(request):
     return render(request, "core/ingresar_solicitud_servicio.html")
 
 def miscompras(request):
+    perfil = PerfilUsuario.objects.get(user=request.user)
+    tipousu = perfil.tipousu
+    rut = perfil.rut
+    
+    lista = []
 
-    return render(request, "core/facturas.html")
+    if request.method == 'GET':
+        cursor = connection.cursor()
+
+        cursor.execute("""
+        EXEC SP_OBTENER_FACTURAS
+            @tipousu = %s,
+            @rut     = %s
+        """, [tipousu, rut])
+        
+        facturas_results = cursor.fetchall()
+
+        cursor.execute("""
+        EXEC SP_OBTENER_GUIAS_DE_DESPACHO
+            @tipousu = %s,
+            @rut     = %s
+        """, [tipousu, rut])
+
+        guias_results = cursor.fetchall()
+
+        for factura_row in facturas_results:
+            factura = {
+                'nrofac': factura_row[0],
+                'nomcli': factura_row[1],
+                'fechafac': factura_row[2],
+                'descfac': factura_row[3],
+                'montofac': factura_row[4],
+                'nrosol': factura_row[5] if factura_row[5] else 'No aplica',
+                'estadosol': factura_row[6] if factura_row[6] else 'No aplica',  
+                'nrogd': 'No aplica',
+                'estadogd': 'No aplica',  
+            }
+
+            for guia_row in guias_results:
+                if factura['nrofac'] == guia_row[0]:
+                    factura['nrogd'] = guia_row[1]
+                    factura['estadogd'] = guia_row[2] 
+                    break 
+
+    lista.append(factura)
+
+    data = {
+        'tipousu': tipousu,
+        'lista': lista,
+    }
+    
+    return render(request, "core/facturas.html", data)
 
 def obtener_valor_usd():
     url = 'https://api.exchangerate-api.com/v4/latest/CLP'
