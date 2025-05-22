@@ -67,6 +67,30 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="ProductosDisponibles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProductosDisponibles.Designer.cs">
+      <DependentUpon>ProductosDisponibles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ReservasANWO.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReservasANWO.Designer.cs">
+      <DependentUpon>ReservasANWO.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GuiaDespacho.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GuiaDespacho.Designer.cs">
+      <DependentUpon>GuiaDespacho.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MenuPrincipal.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MenuPrincipal.Designer.cs">
+      <DependentUpon>MenuPrincipal.cs</DependentUpon>
+    </Compile>
     <Compile Include="ScAutenticacion.cs" />
     <Compile Include="ScProducto.cs" />
     <Compile Include="VentanaBuscarID.cs">
@@ -89,6 +113,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ProductosDisponibles.resx">
+      <DependentUpon>ProductosDisponibles.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="VentanaBuscarID.resx">
       <DependentUpon>VentanaBuscarID.cs</DependentUpon>
     </EmbeddedResource>
