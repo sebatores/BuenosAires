@@ -1,5 +1,99 @@
 from django.db import connection
 
+SP_CREAR_FACTURA = """
+CREATE PROCEDURE [dbo].[SP_CREAR_FACTURA]
+    @descfac VARCHAR(100),
+    @monto INT,
+    @rutcli VARCHAR(20),
+    @idprod INT,
+    @nrofac INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    INSERT INTO FACTURA (nrofac, fechafac, descfac, monto, rutcli, idprod)
+    VALUES (@nrofac, GETDATE(), @descfac, @monto, @rutcli, @idprod);
+
+END
+"""
+
+SP_CREAR_SOLICITUD_SERVICIO = """
+CREATE PROCEDURE [dbo].[SP_CREAR_SOLICITUD_SERVICIO]
+    @tiposol VARCHAR(100),
+    @fechavisita DATE,
+    @descsol VARCHAR(400),
+    @descfac VARCHAR(100),
+    @monto INT,
+    @rutcli VARCHAR(20),
+    @idprod INT
+
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @nrosol INT;
+    DECLARE @ruttec VARCHAR(20);
+    DECLARE @nrofac INT;
+
+    SET @nrofac = (SELECT ISNULL(MAX(nrofac), 0) + 1 FROM FACTURA);
+    SET @nrosol = (SELECT ISNULL(MAX(nrosol), 0) + 111 FROM SOLICITUDSERVICIO);
+
+    SET @ruttec = (
+        SELECT TOP 1 ruttec
+        FROM SOLICITUDSERVICIO
+        GROUP BY ruttec
+        ORDER BY COUNT(*) ASC
+    );
+
+    SET @monto = CASE WHEN @tiposol = 'Instalación' THEN @monto ELSE 25000 END;
+    SET @idprod = CASE WHEN @tiposol = 'Instalación' THEN @idprod ELSE 1 END;
+    
+    EXEC SP_CREAR_FACTURA
+        @descfac = @descfac,
+        @monto = @monto,
+        @rutcli = @rutcli,
+        @idprod = @idprod,
+        @nrofac = @nrofac;
+   
+    INSERT INTO SOLICITUDSERVICIO (nrosol, tiposol, fechavisita, descsol, estadosol, nrofac, ruttec)
+    VALUES (@nrosol, @tiposol, @fechavisita, @descsol, 'Aceptada', @nrofac, @ruttec)
+
+    IF @tiposol = 'Instalación'
+    BEGIN
+        EXEC SP_CREAR_GUIA_DESPACHO
+            @nrofac = @nrofac,
+            @idprod = @idprod;
+    END
+
+END
+"""
+
+SP_CREAR_GUIA_DESPACHO = """
+CREATE PROCEDURE [dbo].[SP_CREAR_GUIA_DESPACHO]
+    @nrofac INT,
+    @idprod INT
+
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @nrogd INT;
+    SET @nrogd = (SELECT ISNULL(MAX(nrogd), 0) + 11 FROM GUIADESPACHO);
+    
+    INSERT INTO GUIADESPACHO (nrogd, estadogd, nrofac, idprod)
+    VALUES (@nrogd, 'En bodega', @nrofac, @idprod)
+
+END
+"""
+
+# SP_OBTENER_FACTURAS = """
+
+# """
+
+# SP_ACTUALIZAR_SOLICITUD_DE_SERVICIO = """
+
+# """
+
 SP_OBTENER_EQUIPOS_EN_BODEGA = """
 CREATE PROCEDURE [dbo].[SP_OBTENER_EQUIPOS_EN_BODEGA]
 AS
@@ -252,6 +346,22 @@ def run():
     exec_sql("INSERT INTO dbo.ANWOSTOCKPRODUCTO (NROSERIEANWO, NOMPRODANWO, PRECIOANWO, RESERVADO) VALUES ('A8', 'Aire Anwo 888',  '200000', 'S');")
     exec_sql("INSERT INTO dbo.ANWOSTOCKPRODUCTO (NROSERIEANWO, NOMPRODANWO, PRECIOANWO, RESERVADO) VALUES ('A9', 'Aire Anwo 999',  '500000', 'N');")
 
+
+    try:
+        exec_sql(SP_CREAR_FACTURA)
+    except:
+        pass
+
+    try:
+        exec_sql(SP_CREAR_SOLICITUD_SERVICIO)
+    except:
+        pass
+
+    try:
+        exec_sql(SP_CREAR_GUIA_DESPACHO)
+    except:
+        pass
+
     try:
         exec_sql(SP_OBTENER_EQUIPOS_EN_BODEGA)
     except:
@@ -277,4 +387,5 @@ def run():
     except:
         pass
 
+    
     

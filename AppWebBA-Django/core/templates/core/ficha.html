@@ -33,12 +33,22 @@
                     </span> -->
                 </h4>
                 <br>
+                <h4>
+                    Producto {{ producto.disponibilidad }}
+                </h4>
+                {% if producto.disponibilidad == "DISPONIBLE" %}
                 <form method="POST" class="asd">
+                    {% csrf_token %}
                     <input type="submit" class="btn btn-success btn-lg ficha_boton" value="Comprar">
                     {% if mesg %}
                         <div id="form_message" class="alert alert-danger" role="alert">{{ mesg }}</div>
                     {% endif %}
                 </form>
+                {% else %}
+                    <div class="alert alert-warning" role="alert">
+                        Este producto está <strong>agotado</strong> y no se puede comprar en este momento.
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

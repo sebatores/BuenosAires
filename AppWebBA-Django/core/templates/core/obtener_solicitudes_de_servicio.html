@@ -20,152 +20,14 @@
                 <th>Técnico</th>
                 <th>Descripción</th>
                 <th>Estado SS</th>
+                {% if tipousu == 'Técnico' %}
                 <th>Opciones</th>
+                {% endif %}
             </theader>
             <tbody>
-                <tr class="table-secondary table-bordered border-dark">
-                    <td>111</td>
-                    <td>Ana Torres</td>
-                    <td>Instalación</td>
-                    <td>02-03-2022</td>
-                    <td>9:00</td>
-                    <td>Juan Gatica</td>
-                    <td>Instalar equipo</td>
-                    <td>Cerrada</td>
-                    <td>
-                      <a href="#" class="btn btn-success">Aceptar</a>
-                      <a href="#" class="btn btn-primary">Modificar</a>
-                      <a href="#" class="btn btn-danger">Cerrar</a>
-                    </td>
-                  </tr>
-                  <tr class="table-light table-bordered border-dark">
-                    <td>222</td>
-                    <td>Juan Pérez</td>
-                    <td>Instalación</td>
-                    <td>03-03-2022</td>
-                    <td>10:00</td>
-                    <td>Juan Gatica</td>
-                    <td>Instalar equipo</td>
-                    <td>Aceptada</td>
-                    <td>
-                      <a href="#" class="btn btn-success">Aceptar</a>
-                      <a href="#" class="btn btn-primary">Modificar</a>
-                      <a href="#" class="btn btn-danger">Cerrar</a>
-                    </td>
-                  </tr>
-                  <tr class="table-secondary table-bordered border-dark">
-                    <td>333</td>
-                    <td>Mario Ayala</td>
-                    <td>Mantención</td>
-                    <td>10-03-2022</td>
-                    <td>15:00</td>
-                    <td>Juan Gatica</td>
-                    <td>Cambiar enchufe</td>
-                    <td>Aceptada</td>
-                    <td>
-                      <a href="#" class="btn btn-success">Aceptar</a>
-                      <a href="#" class="btn btn-primary">Modificar</a>
-                      <a href="#" class="btn btn-danger">Cerrar</a>
-                    </td>
-                  </tr>
-                  <tr class="table-light table-bordered border-dark">
-                    <td>444</td>
-                    <td>John Soto</td>
-                    <td>Mantención</td>
-                    <td>15-03-2022</td>
-                    <td>9:00</td>
-                    <td>Juan Gatica</td>
-                    <td>Limpiar filtro</td>
-                    <td>Aceptada</td>
-                    <td>
-                      <a href="#" class="btn btn-success">Aceptar</a>
-                      <a href="#" class="btn btn-primary">Modificar</a>
-                      <a href="#" class="btn btn-danger">Cerrar</a>
-                    </td>
-                  </tr>
-                  <tr class="table-secondary table-bordered border-dark">
-                    <td>555</td>
-                    <td>Pedro Mora</td>
-                    <td>Reparación</td>
-                    <td>22-03-2022</td>
-                    <td>17:00</td>
-                    <td>Juan Gatica</td>
-                    <td>Reparar equipo</td>
-                    <td>Aceptada</td>
-                    <td>
-                      <a href="#" class="btn btn-success">Aceptar</a>
-                      <a href="#" class="btn btn-primary">Modificar</a>
-                      <a href="#" class="btn btn-danger">Cerrar</a>
-                    </td>
-                  </tr>
-                  <tr class="table-light table-bordered border-dark">
-                    <td>666</td>
-                    <td>Ana Torres</td>
-                    <td>Mantención</td>
-                    <td>03-04-2022</td>
-                    <td>11:00</td>
-                    <td>María Vera</td>
-                    <td>Limpiar filtro</td>
-                    <td>Cerrada</td>
-                    <td>
-                      <a href="#" class="btn btn-success">Aceptar</a>
-                      <a href="#" class="btn btn-primary">Modificar</a>
-                      <a href="#" class="btn btn-danger">Cerrar</a>
-                    </td>
-                  </tr>
-                  <tr class="table-secondary table-bordered border-dark">
-                    <td>777</td>
-                    <td>Ana Torres</td>
-                    <td>Reparación</td>
-                    <td>10-04-2022</td>
-                    <td>16:00</td>
-                    <td>Juan Gatica</td>
-                    <td>Reparar aire</td>
-                    <td>Modificada</td>
-                    <td>
-                      <a href="#" class="btn btn-success">Aceptar</a>
-                      <a href="#" class="btn btn-primary">Modificar</a>
-                      <a href="#" class="btn btn-danger">Cerrar</a>
-                    </td>
-                  </tr>
-                  <tr class="table-light table-bordered border-dark">
-                    <td>888</td>
-                    <td>Ana Torres</td>
-                    <td>Instalación</td>
-                    <td>15-04-2022</td>
-                    <td>10:00</td>
-                    <td>María Vera</td>
-                    <td>Instalar equipo</td>
-                    <td>Modificada</td>
-                    <td>
-                      <a href="#" class="btn btn-success">Aceptar</a>
-                      <a href="#" class="btn btn-primary">Modificar</a>
-                      <a href="#" class="btn btn-danger">Cerrar</a>
-                    </td>
-                  </tr>
-                  <tr class="table-secondary table-bordered border-dark">
-                    <td>999</td>
-                    <td>Ana Torres</td>
-                    <td>Reparación</td>
-                    <td>22-04-2022</td>
-                    <td>18:00</td>
-                    <td>Pablo Díaz</td>
-                    <td>Enchufe quemado</td>
-                    <td>Aceptada</td>
-                    <td>
-                      <a href="#" class="btn btn-success">Aceptar</a>
-                      <a href="#" class="btn btn-primary">Modificar</a>
-                      <a href="#" class="btn btn-danger">Cerrar</a>
-                    </td>
-                  </tr>
-
-               
-
-
-
-                {% comment %} {% if lista %}
+                {% if lista %}
                     {% for sol in lista %}
-                        <tr>
+                        <tr class="{% cycle 'table-secondary' 'table-light' %} table-bordered border-dark">
                             <td>{{ sol.nrosol }}</td>
                             <td>{{ sol.nomcli }}</td>
                             <td>{{ sol.tiposol }}</td>
@@ -174,21 +36,27 @@
                             <td>{{ sol.nomtec }}</td>
                             <td>{{ sol.descser }}</td>
                             <td>{{ sol.estadosol }}</td>
+                            {% if tipousu == 'Técnico' %}
                             <td>
-                                <a href="" class="btn btn-primary ">Aceptar</a> 
-                                <a href="" class="btn btn-danger ">Modificar</a>
-                                <a href="" class="btn btn-danger ">Cerrar</a>
+                              <a href="#" class="btn btn-success">Aceptar</a>
+                              <a href="#" class="btn btn-primary">Modificar</a>
+                              <a href="#" class="btn btn-danger">Cerrar</a>
                             </td>
-                            
+                            {% endif %}
                         </tr>
                     {% endfor %}
-                {% endif %} {% endcomment %}
+                {% endif %}
             </tbody>
         </table>
 
-        {% comment %} <div>
+        {% if tipousu == 'Cliente' %}
+        <div>
             <a type="button" class="btn btn-success solicitud_boton" href="{% url 'ingresar_solicitud_servicio' %}">Ingresar una nueva solicitud de servicio</a>
-        </div> {% endcomment %}
+        </div>
+        {% endif %}
+
+         
 
     </div>
 {% endblock content %}
+

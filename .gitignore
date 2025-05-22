@@ -22,12 +22,21 @@ obj/
 # PYTHON / DJANGO
 # ===================================
 
-__pycache__/
-*.pyc
 .venv/
+venv/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg
+*.egg-info/
+dist/
+build/
+
 
 # ===================================
 # SISTEMA / ARCHIVOS COMUNES A IGNORAR
 # ===================================
 Thumbs.db
 .DS_Store
+

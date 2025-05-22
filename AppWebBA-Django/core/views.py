@@ -76,8 +76,6 @@ def tienda(request):
 def ficha(request, id):
     data = {"mesg": "", "producto": None}
     
-    response = requests.get('http://127.0.0.1:8001/BuenosAiresApiRest/obtener_equipos_en_bodega')
-
     # Cuando el usuario hace clic en el boton COMPRAR, se ejecuta el METODO POST del
     # formulario de ficha.html, con lo cual se redirecciona la página para que
     # llegue a esta VISTA llamada "FICHA". A continuacion se verifica que sea un POST 
@@ -86,6 +84,7 @@ def ficha(request, id):
     # Si se tata de un CLIENTE REGISTRADO, se redirecciona a la vista "iniciar_pago"
     if request.method == "POST":
         if request.user.is_authenticated and not request.user.is_staff:
+            request.session['tiposol'] = 'Instalación'
             return redirect(iniciar_pago, id)
         else:
             # Si el usuario que hace la compra no ha iniciado sesión,
@@ -96,15 +95,27 @@ def ficha(request, id):
     # Si visitamos la URL de FICHA y la pagina no nos envia un METODO POST, 
     # quiere decir que solo debemos fabricar la pagina y devolvera al browser
     # para que se muestren los datos de la FICHA
-    precio_usd = obtener_valor_usd()
     
-    producto = Producto.objects.get(idprod=id)
+    
 
-    precio_clp = producto.precio
-    precio_en_usd = round(precio_clp * precio_usd, 2) if precio_usd != 0 else 0
-    
-    data["precio_usd"] = precio_en_usd
-    data["producto"] = producto
+    response = requests.get('http://127.0.0.1:8001/BuenosAiresApiRest/obtener_equipos_en_bodega')
+
+    if response.status_code == 200:
+        productos = response.json()
+        producto = next((item for item in productos if str(item.get("idprod")) == str(id)), None)
+
+    # Obtener el valor del dólar
+    precio_usd = obtener_valor_usd()
+
+    # Solo calculamos el precio en USD si se encontró el producto
+    if producto:
+        precio_clp = producto["precio"]
+        precio_en_usd = round(precio_clp * precio_usd, 2) if precio_usd else 0
+
+    data = {
+        "producto": producto,
+        "precio_usd": precio_en_usd
+    }
     
     
     return render(request, "core/ficha.html", data)
@@ -120,8 +131,30 @@ def iniciar_pago(request, id):
     print("Webpay Plus Transaction.create")
     buy_order = str(random.randrange(1000000, 99999999))
     session_id = request.user.username
-    amount = Producto.objects.get(idprod=id).precio
-    return_url = 'http://127.0.0.1:8000/pago_exitoso/'
+    producto = Producto.objects.get(idprod=id)
+    
+    descprod = producto.descprod
+    idprod = producto.idprod
+
+    request.session['idprod'] = idprod
+    request.session['descprod'] = descprod
+    tiposol = request.session.get('tiposol')
+
+    descsol = request.session.get('descsol')
+    fechavisita = request.session.get('fechavisita')
+    horavisita = request.session.get('horavisita')
+
+    request.session['tiposol'] = tiposol
+    request.session['descsol'] = descsol
+    request.session['fechavisita'] = fechavisita
+    request.session['horavisita'] = horavisita
+
+    if tiposol != 'Instalación':
+        amount = 25000
+    else:
+        amount = producto.precio
+
+    return_url = 'http://127.0.0.1:8001/pago_exitoso/'
 
     # response = Transaction.create(buy_order, session_id, amount, return_url)
     commercecode = "597055555532"
@@ -167,6 +200,45 @@ def pago_exitoso(request):
         perfil = PerfilUsuario.objects.get(user=user)
         form = PerfilUsuarioForm()
 
+        tiposol = request.session.get('tiposol')
+
+        if tiposol == 'Instalación':
+            descsol = 'Instalar equipo'
+            fechavisita = '2025-05-23'
+            print('esta es la fecha de visita pero instalacion: ', fechavisita)
+
+        else:
+            descsol = request.session.get('descsol')
+            fechavisita = request.session.get('fechavisita')
+            fechavisita = fechavisita.replace("/", "-")
+            partes = fechavisita.split("-")
+            if len(partes) == 3:
+                fechavisita = f"{partes[2]}-{partes[1]}-{partes[0]}"
+            print('la fecha de visita es: ',fechavisita)
+
+        idprod = request.session.get('idprod')
+        descprod = request.session.get('descprod')
+        rutcli = perfil.rut
+
+        try:
+            cursor = connection.cursor()
+
+            cursor.execute("""
+                EXEC SP_CREAR_SOLICITUD_SERVICIO
+                    @tiposol = %s,
+                    @fechavisita = %s,
+                    @descsol = %s,
+                    @descfac = %s,
+                    @monto = %s,
+                    @rutcli = %s,
+                    @idprod = %s
+            """, [tiposol, fechavisita, descsol, descprod, response['amount'], rutcli, idprod])
+
+            print("Solicitud de servicio creada correctamente.")
+
+        except Exception as e:
+            print("Error al crear la solicitud de servicio:", e)
+
         context = {
             "buy_order": response['buy_order'],
             "session_id": response['session_id'],
@@ -178,9 +250,10 @@ def pago_exitoso(request):
             "email": user.email,
             "rut": perfil.rut,
             "dirusu": perfil.dirusu,
-            "response_code": response['response_code']
+            "response_code": response['response_code'],
         }
 
+    
         return render(request, "core/pago_exitoso.html", context)
     else:
         return redirect(home)
@@ -265,11 +338,66 @@ def perfil_usuario(request):
     return render(request, "core/perfil_usuario.html", data)
 
 def obtener_solicitudes_de_servicio(request):
-    tipousu = PerfilUsuario.objects.get(user=request.user).tipousu
-    data = {'tipousu': tipousu }
+    perfil = PerfilUsuario.objects.get(user=request.user)
+    tipousu = perfil.tipousu
+    rut = perfil.rut
+
+    lista = []
+
+    if request.method == 'GET':
+
+        cursor = connection.cursor()
+
+        if tipousu == 'Administrador':
+            cursor.execute("""
+            EXEC SP_OBTENER_SOLICITUDES_DE_SERVICIO
+                @tipousu = %s,
+                @rut     = %s
+            """, ['Todos', ''])
+        else:
+            cursor.execute("""
+                EXEC SP_OBTENER_SOLICITUDES_DE_SERVICIO
+                    @tipousu = %s,
+                    @rut     = %s
+            """, [tipousu, rut])
+
+        results = cursor.fetchall()
+
+        for row in results:
+            lista.append({
+                'nrosol': row[0],
+                'nomcli': row[1],
+                'tiposol': row[2],
+                'fechavisita': row[3],
+                'hora': row[4],
+                'nomtec': row[5],
+                'descser': row[6],
+                'estadosol': row[7],
+            })
+
+    data = {
+        'tipousu': tipousu,
+        'lista': lista,
+    }
+
     return render(request, "core/obtener_solicitudes_de_servicio.html", data)
 
 def ingresar_solicitud_servicio(request):
+    id = 1
+    if request.method == "POST":
+        if request.user.is_authenticated and not request.user.is_staff:
+
+            tiposol = request.POST.get("tiposol")
+            descsol = request.POST.get("descsol")
+            fechavisita = request.POST.get("fechavisita")
+            horavisita = request.POST.get("horavisita")
+
+            request.session['tiposol'] = tiposol
+            request.session['descsol'] = descsol
+            request.session['fechavisita'] = fechavisita
+            request.session['horavisita'] = horavisita
+
+            return redirect(iniciar_pago, id)
 
     return render(request, "core/ingresar_solicitud_servicio.html")
 
@@ -285,7 +413,6 @@ def obtener_valor_usd():
         if response.status_code == 200:
             datos = response.json()
             valor_usd = datos['rates']['USD']
-            print('Valor USD desde la API:', valor_usd)
             return valor_usd
     except:
         pass
