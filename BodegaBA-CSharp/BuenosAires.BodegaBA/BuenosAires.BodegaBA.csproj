@@ -113,8 +113,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="MenuPrincipal.resx">
+      <DependentUpon>MenuPrincipal.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ProductosDisponibles.resx">
       <DependentUpon>ProductosDisponibles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReservasANWO.resx">
+      <DependentUpon>ReservasANWO.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VentanaBuscarID.resx">
       <DependentUpon>VentanaBuscarID.cs</DependentUpon>
