@@ -10,14 +10,19 @@ using System.Windows.Forms;
 
 namespace BuenosAires.BodegaBA
 {
-    public partial class MenuPrincipal : Form
+    public partial class ReservasANWO : Form
     {
-        public MenuPrincipal()
+        public ReservasANWO()
         {
             InitializeComponent();
         }
 
-        private void MenuPrincipal_Load(object sender, EventArgs e)
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
         {
 
         }

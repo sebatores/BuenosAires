@@ -73,11 +73,11 @@
     <Compile Include="ProductosDisponibles.Designer.cs">
       <DependentUpon>ProductosDisponibles.cs</DependentUpon>
     </Compile>
-    <Compile Include="ReservasANWO.cs">
+    <Compile Include="MenuPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ReservasANWO.Designer.cs">
-      <DependentUpon>ReservasANWO.cs</DependentUpon>
+    <Compile Include="MenuPrincipal.Designer.cs">
+      <DependentUpon>MenuPrincipal.cs</DependentUpon>
     </Compile>
     <Compile Include="GuiaDespacho.cs">
       <SubType>Form</SubType>
@@ -85,11 +85,11 @@
     <Compile Include="GuiaDespacho.Designer.cs">
       <DependentUpon>GuiaDespacho.cs</DependentUpon>
     </Compile>
-    <Compile Include="MenuPrincipal.cs">
+    <Compile Include="ReservasANWO.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MenuPrincipal.Designer.cs">
-      <DependentUpon>MenuPrincipal.cs</DependentUpon>
+    <Compile Include="ReservasANWO.Designer.cs">
+      <DependentUpon>ReservasANWO.cs</DependentUpon>
     </Compile>
     <Compile Include="ScAutenticacion.cs" />
     <Compile Include="ScProducto.cs" />
@@ -113,14 +113,17 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="MenuPrincipal.resx">
-      <DependentUpon>MenuPrincipal.cs</DependentUpon>
+    <EmbeddedResource Include="GuiaDespacho.resx">
+      <DependentUpon>GuiaDespacho.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReservasANWO.resx">
+      <DependentUpon>ReservasANWO.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProductosDisponibles.resx">
       <DependentUpon>ProductosDisponibles.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ReservasANWO.resx">
-      <DependentUpon>ReservasANWO.cs</DependentUpon>
+    <EmbeddedResource Include="MenuPrincipal.resx">
+      <DependentUpon>MenuPrincipal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VentanaBuscarID.resx">
       <DependentUpon>VentanaBuscarID.cs</DependentUpon>
