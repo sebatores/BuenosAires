@@ -67,17 +67,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="ProductosDisponibles.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ProductosDisponibles.Designer.cs">
-      <DependentUpon>ProductosDisponibles.cs</DependentUpon>
-    </Compile>
     <Compile Include="MenuPrincipal.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MenuPrincipal.Designer.cs">
       <DependentUpon>MenuPrincipal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProductosDisponibles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProductosDisponibles.Designer.cs">
+      <DependentUpon>ProductosDisponibles.cs</DependentUpon>
     </Compile>
     <Compile Include="GuiaDespacho.cs">
       <SubType>Form</SubType>
@@ -116,14 +116,14 @@
     <EmbeddedResource Include="GuiaDespacho.resx">
       <DependentUpon>GuiaDespacho.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ReservasANWO.resx">
-      <DependentUpon>ReservasANWO.cs</DependentUpon>
+    <EmbeddedResource Include="MenuPrincipal.resx">
+      <DependentUpon>MenuPrincipal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProductosDisponibles.resx">
       <DependentUpon>ProductosDisponibles.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MenuPrincipal.resx">
-      <DependentUpon>MenuPrincipal.cs</DependentUpon>
+    <EmbeddedResource Include="ReservasANWO.resx">
+      <DependentUpon>ReservasANWO.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VentanaBuscarID.resx">
       <DependentUpon>VentanaBuscarID.cs</DependentUpon>
