@@ -66,6 +66,7 @@
             this.btnConsultarProductos.TabIndex = 2;
             this.btnConsultarProductos.Text = "Consultar Productos en Bodega";
             this.btnConsultarProductos.UseVisualStyleBackColor = true;
+            this.btnConsultarProductos.Click += new System.EventHandler(this.btnConsultarProductos_click);
             // 
             // btnAdministrarDespacho
             // 
@@ -75,6 +76,7 @@
             this.btnAdministrarDespacho.TabIndex = 3;
             this.btnAdministrarDespacho.Text = "Administrar Guías de Despacho";
             this.btnAdministrarDespacho.UseVisualStyleBackColor = true;
+            this.btnAdministrarDespacho.Click += new System.EventHandler(this.btnAdministrarDespacho_click);
             // 
             // btnANWO
             // 
@@ -84,6 +86,7 @@
             this.btnANWO.TabIndex = 4;
             this.btnANWO.Text = "Reservas Equipos de ANWO";
             this.btnANWO.UseVisualStyleBackColor = true;
+            this.btnANWO.Click += new System.EventHandler(this.btnANWO_click);
             // 
             // btnSalir
             // 
@@ -93,6 +96,7 @@
             this.btnSalir.TabIndex = 5;
             this.btnSalir.Text = "Salir";
             this.btnSalir.UseVisualStyleBackColor = true;
+            this.btnSalir.Click += new System.EventHandler(this.btnSalir_click);
             // 
             // MenuPrincipal
             // 

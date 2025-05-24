@@ -17,6 +17,17 @@ namespace BuenosAires.BodegaBA
             InitializeComponent();
         }
 
+        //nuevo agregado (eithan)
+
+        private void btnVolverAlMenuPrincipal_click(object sender, EventArgs e)
+        {
+            MenuPrincipal ventana = new MenuPrincipal();
+            ventana.Show();
+            this.Close();
+
+        }
+        //fin agregado
+
         private void listView1_SelectedIndexChanged(object sender, EventArgs e)
         {
 

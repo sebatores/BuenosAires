@@ -17,6 +17,39 @@ namespace BuenosAires.BodegaBA
             InitializeComponent();
         }
 
+        //nuevo agregado (eithan)
+        private void btnConsultarProductos_click(object sender, EventArgs e)
+        {
+            ProductosDisponibles ventana = new ProductosDisponibles();
+            ventana.Show();
+            this.Hide();
+        }
+        
+         
+        private void btnAdministrarDespacho_click(object sender, EventArgs e)
+        {
+            GuiaDespacho ventana = new GuiaDespacho();
+            ventana.Show();
+            this.Hide();
+
+        }
+        
+             private void btnANWO_click(object sender, EventArgs e)
+        {
+            ReservasANWO ventana = new ReservasANWO();
+            ventana.Show();
+            this.Hide();
+
+        }
+
+             private void btnSalir_click(object sender, EventArgs e)
+        {
+            Application.Exit();
+
+        }
+        //fin agregado
+         
+         
         private void label2_Click(object sender, EventArgs e)
         {
 
@@ -26,5 +59,6 @@ namespace BuenosAires.BodegaBA
         {
 
         }
+
     }
 }

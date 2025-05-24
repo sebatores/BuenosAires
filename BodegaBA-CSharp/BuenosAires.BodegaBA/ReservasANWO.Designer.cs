@@ -29,15 +29,15 @@
         private void InitializeComponent()
         {
             this.lvAnwo = new System.Windows.Forms.ListView();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.btnVolverAlMenuPrincipal = new System.Windows.Forms.Button();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.btnVolverAlMenuPrincipal = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lvAnwo
@@ -56,6 +56,31 @@
             this.lvAnwo.UseCompatibleStateImageBehavior = false;
             this.lvAnwo.View = System.Windows.Forms.View.Details;
             this.lvAnwo.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "Nro Serie";
+            this.columnHeader1.Width = 140;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Nombre Producto";
+            this.columnHeader2.Width = 186;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Precio";
+            this.columnHeader3.Width = 124;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Reservado";
+            this.columnHeader4.Width = 172;
+            // 
+            // columnHeader5
+            // 
+            this.columnHeader5.Text = "Opciones";
+            this.columnHeader5.Width = 225;
             // 
             // label1
             // 
@@ -95,31 +120,7 @@
             this.btnVolverAlMenuPrincipal.TabIndex = 4;
             this.btnVolverAlMenuPrincipal.Text = "Volver al Menú Principal";
             this.btnVolverAlMenuPrincipal.UseVisualStyleBackColor = true;
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "Nro Serie";
-            this.columnHeader1.Width = 140;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "Nombre Producto";
-            this.columnHeader2.Width = 186;
-            // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Text = "Precio";
-            this.columnHeader3.Width = 124;
-            // 
-            // columnHeader4
-            // 
-            this.columnHeader4.Text = "Reservado";
-            this.columnHeader4.Width = 172;
-            // 
-            // columnHeader5
-            // 
-            this.columnHeader5.Text = "Opciones";
-            this.columnHeader5.Width = 225;
+            this.btnVolverAlMenuPrincipal.Click += new System.EventHandler(this.btnVolverAlMenuPrincipal_click);
             // 
             // ReservasANWO
             // 
