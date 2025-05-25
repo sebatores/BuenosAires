@@ -30,15 +30,21 @@
         {
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.tblGuiasDespacho = new System.Windows.Forms.TableLayoutPanel();
             this.btnMenuPrincipal = new System.Windows.Forms.Button();
+            this.lvDespacho = new System.Windows.Forms.ListView();
+            this.ColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ColumnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ColumnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ColumnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ColumnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.ColumnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 21.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(225, 56);
+            this.label2.Location = new System.Drawing.Point(251, 56);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(288, 33);
             this.label2.TabIndex = 3;
@@ -54,27 +60,6 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Buenos Aires";
             // 
-            // tblGuiasDespacho
-            // 
-            this.tblGuiasDespacho.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.tblGuiasDespacho.ColumnCount = 6;
-            this.tblGuiasDespacho.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 29.7491F));
-            this.tblGuiasDespacho.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70.25089F));
-            this.tblGuiasDespacho.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 180F));
-            this.tblGuiasDespacho.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 108F));
-            this.tblGuiasDespacho.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 148F));
-            this.tblGuiasDespacho.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 96F));
-            this.tblGuiasDespacho.Location = new System.Drawing.Point(13, 105);
-            this.tblGuiasDespacho.Name = "tblGuiasDespacho";
-            this.tblGuiasDespacho.RowCount = 5;
-            this.tblGuiasDespacho.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 44.52555F));
-            this.tblGuiasDespacho.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 55.47445F));
-            this.tblGuiasDespacho.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 59F));
-            this.tblGuiasDespacho.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 59F));
-            this.tblGuiasDespacho.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
-            this.tblGuiasDespacho.Size = new System.Drawing.Size(840, 336);
-            this.tblGuiasDespacho.TabIndex = 4;
-            // 
             // btnMenuPrincipal
             // 
             this.btnMenuPrincipal.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -85,13 +70,61 @@
             this.btnMenuPrincipal.Text = "Volver al menu principal";
             this.btnMenuPrincipal.UseVisualStyleBackColor = true;
             // 
+            // lvDespacho
+            // 
+            this.lvDespacho.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.ColumnHeader,
+            this.ColumnHeader1,
+            this.ColumnHeader2,
+            this.ColumnHeader3,
+            this.ColumnHeader4,
+            this.ColumnHeader5});
+            this.lvDespacho.HideSelection = false;
+            this.lvDespacho.Location = new System.Drawing.Point(12, 105);
+            this.lvDespacho.Name = "lvDespacho";
+            this.lvDespacho.Size = new System.Drawing.Size(854, 351);
+            this.lvDespacho.TabIndex = 6;
+            this.lvDespacho.UseCompatibleStateImageBehavior = false;
+            this.lvDespacho.View = System.Windows.Forms.View.Details;
+            this.lvDespacho.SelectedIndexChanged += new System.EventHandler(this.lvDespacho_SelectedIndexChanged);
+            // 
+            // ColumnHeader
+            // 
+            this.ColumnHeader.Text = "Nro Despacho";
+            this.ColumnHeader.Width = 137;
+            // 
+            // ColumnHeader1
+            // 
+            this.ColumnHeader1.Text = "Producto";
+            this.ColumnHeader1.Width = 136;
+            // 
+            // ColumnHeader2
+            // 
+            this.ColumnHeader2.Text = "Estado GD";
+            this.ColumnHeader2.Width = 140;
+            // 
+            // ColumnHeader3
+            // 
+            this.ColumnHeader3.Text = "Nro Factura";
+            this.ColumnHeader3.Width = 107;
+            // 
+            // ColumnHeader4
+            // 
+            this.ColumnHeader4.Text = "Cliente";
+            this.ColumnHeader4.Width = 142;
+            // 
+            // ColumnHeader5
+            // 
+            this.ColumnHeader5.Text = "Opciones";
+            this.ColumnHeader5.Width = 550;
+            // 
             // GuiaDespacho
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(878, 518);
+            this.Controls.Add(this.lvDespacho);
             this.Controls.Add(this.btnMenuPrincipal);
-            this.Controls.Add(this.tblGuiasDespacho);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "GuiaDespacho";
@@ -105,7 +138,13 @@
 
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TableLayoutPanel tblGuiasDespacho;
         private System.Windows.Forms.Button btnMenuPrincipal;
+        private System.Windows.Forms.ListView lvDespacho;
+        private System.Windows.Forms.ColumnHeader ColumnHeader;
+        private System.Windows.Forms.ColumnHeader ColumnHeader1;
+        private System.Windows.Forms.ColumnHeader ColumnHeader2;
+        private System.Windows.Forms.ColumnHeader ColumnHeader3;
+        private System.Windows.Forms.ColumnHeader ColumnHeader4;
+        private System.Windows.Forms.ColumnHeader ColumnHeader5;
     }
 }

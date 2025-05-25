@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using BuenosAires.Model;
 using BuenosAires.Model.Utiles;
 
-// esto lo hizo el eithan
+
 
 namespace BuenosAires.DataLayer
 {

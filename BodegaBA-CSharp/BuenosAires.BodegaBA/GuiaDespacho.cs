@@ -16,5 +16,10 @@ namespace BuenosAires.BodegaBA
         {
             InitializeComponent();
         }
+
+        private void lvDespacho_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

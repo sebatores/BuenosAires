@@ -30,8 +30,12 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.tblProductosEnBodega = new System.Windows.Forms.TableLayoutPanel();
             this.btnSalir = new System.Windows.Forms.Button();
+            this.lvBodega = new System.Windows.Forms.ListView();
+            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // label1
@@ -54,29 +58,6 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "Productos Disponibles en Bodega";
             // 
-            // tblProductosEnBodega
-            // 
-            this.tblProductosEnBodega.BackColor = System.Drawing.SystemColors.AppWorkspace;
-            this.tblProductosEnBodega.ColumnCount = 4;
-            this.tblProductosEnBodega.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 47.96511F));
-            this.tblProductosEnBodega.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 52.03489F));
-            this.tblProductosEnBodega.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 187F));
-            this.tblProductosEnBodega.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 186F));
-            this.tblProductosEnBodega.Location = new System.Drawing.Point(30, 118);
-            this.tblProductosEnBodega.Name = "tblProductosEnBodega";
-            this.tblProductosEnBodega.RowCount = 8;
-            this.tblProductosEnBodega.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 53.84615F));
-            this.tblProductosEnBodega.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 46.15385F));
-            this.tblProductosEnBodega.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
-            this.tblProductosEnBodega.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 33F));
-            this.tblProductosEnBodega.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tblProductosEnBodega.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tblProductosEnBodega.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tblProductosEnBodega.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 31F));
-            this.tblProductosEnBodega.Size = new System.Drawing.Size(738, 285);
-            this.tblProductosEnBodega.TabIndex = 3;
-            this.tblProductosEnBodega.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
-            // 
             // btnSalir
             // 
             this.btnSalir.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -88,13 +69,48 @@
             this.btnSalir.UseVisualStyleBackColor = true;
             this.btnSalir.Click += new System.EventHandler(this.button1_Click);
             // 
+            // lvBodega
+            // 
+            this.lvBodega.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader1,
+            this.columnHeader2,
+            this.columnHeader3,
+            this.columnHeader4});
+            this.lvBodega.HideSelection = false;
+            this.lvBodega.Location = new System.Drawing.Point(15, 124);
+            this.lvBodega.Name = "lvBodega";
+            this.lvBodega.Size = new System.Drawing.Size(744, 289);
+            this.lvBodega.TabIndex = 5;
+            this.lvBodega.UseCompatibleStateImageBehavior = false;
+            this.lvBodega.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "ID PROD";
+            this.columnHeader1.Width = 115;
+            // 
+            // columnHeader2
+            // 
+            this.columnHeader2.Text = "Nombre Producto";
+            this.columnHeader2.Width = 194;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Cantidad";
+            this.columnHeader3.Width = 185;
+            // 
+            // columnHeader4
+            // 
+            this.columnHeader4.Text = "Disponibles";
+            this.columnHeader4.Width = 332;
+            // 
             // ProductosDisponibles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 475);
+            this.ClientSize = new System.Drawing.Size(781, 475);
+            this.Controls.Add(this.lvBodega);
             this.Controls.Add(this.btnSalir);
-            this.Controls.Add(this.tblProductosEnBodega);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "ProductosDisponibles";
@@ -108,7 +124,11 @@
 
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TableLayoutPanel tblProductosEnBodega;
         private System.Windows.Forms.Button btnSalir;
+        private System.Windows.Forms.ListView lvBodega;
+        private System.Windows.Forms.ColumnHeader columnHeader1;
+        private System.Windows.Forms.ColumnHeader columnHeader2;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader columnHeader4;
     }
 }
