@@ -109,14 +109,13 @@ DATABASES = {
         'NAME': 'base_datos',
         'USER': 'sa',
         'PASSWORD': '123',
-        'HOST': 'LAPTOP-KKEBI7S7\\SQLEXPRESS',
+        'HOST': '',
         'PORT': '',
         'OPTIONS': {
             'driver': 'ODBC Driver 17 for SQL Server',
         },
     },
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -150,7 +149,7 @@ LANGUAGE_CODE = 'es-cl'
 TIME_ZONE = 'America/Santiago'
 USE_I18N = True
 USE_L10N = True
-USE_TZ = True
+USE_TZ = False
 USE_DECIMAL_SEPARATOR = True
 DECIMAL_SEPARATOR = ","
 USE_THOUSAND_SEPARATOR = True

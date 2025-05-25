@@ -1,49 +1,56 @@
 $('#registro').validate({ 
     "rules": {
+        "username": {
+            required: true,
+        },
+        "first_name": {
+            required: true,
+        },
+        "last_name": {
+            required: true,
+        },
         "rut": {
             required: true,
         },
-        "nombres": {
-            required: true,
-        },
-        "apellidos": {
-            required: true,
-        },
-        "correo": {
+        
+        "email": {
             required: true,
             email: true,
         },
         "dirusu": {
             required: true,
         },
-        "password": {
+        "password1": {
             required: true,
             minlength : 10,
         },
         "password2": {
             required: true,
             minlength : 10,
-            equalTo : "#password",
+            equalTo : "#id_password1",
         },
     },
     messages: {
+        "username": {
+            required: 'Debe ingresar un nombre de usuario',
+        },
+        "first_name": {
+            required: 'Debe ingresar sus nombres',
+        },
+        "last_name": {
+            required: 'Debe ingresar sus apellidos',
+        },
         "rut": {
             required: 'Debe ingresar un RUT válido',
         },
-        "nombres": {
-            required: 'Debe ingresar sus nombres',
-        },
-        "apellidos": {
-            required: 'Debe ingresar sus apellidos',
-        },
-        "correo": {
+        "email": {
             required: 'Debe ingresar su correo electrónico',
             email: 'Formato de correo incorrecto'
         },
         "dirusu": {
             required: 'Debe ingresar su dirección',
         },
-        "password": {
+        "password1": {
             required: 'Debe ingresar una password',
             minlength: 'La mínima cantidad de caracteres de la contraseña es 10',
         },
@@ -53,7 +60,9 @@ $('#registro').validate({
             equalTo: 'La repetición de contraseña debe coincidir con la contraseña original',
         },
     }
+    
 });
+
 
 function validateEmail(email) {
     var re = /\S+@\S+\.\S+/;
