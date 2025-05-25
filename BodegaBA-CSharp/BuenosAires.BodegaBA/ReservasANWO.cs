@@ -38,7 +38,6 @@ namespace BuenosAires.BodegaBA
             grid.Columns.Add("Precio", "Precio");
             grid.Columns.Add("Reservado", "Reservado");
 
-            // Columna Opciones como botón para reservar
             var btnColumn = new DataGridViewButtonColumn();
             btnColumn.Name = "Opciones";
             btnColumn.HeaderText = "Opciones";
@@ -46,7 +45,7 @@ namespace BuenosAires.BodegaBA
             btnColumn.UseColumnTextForButtonValue = true;
             grid.Columns.Add(btnColumn);
 
-            // Ajusta propiedades del grid
+       
             grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             grid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             grid.MultiSelect = false;
@@ -80,9 +79,8 @@ namespace BuenosAires.BodegaBA
         private void grid_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)
-                return; // Header
+                return; 
 
-            // Verificamos que la columna clickeada sea la de "Opciones"
             if (grid.Columns[e.ColumnIndex].Name == "Opciones")
             {
                 string nroSerie = grid.Rows[e.RowIndex].Cells["NroSerie"].Value?.ToString();
@@ -93,7 +91,7 @@ namespace BuenosAires.BodegaBA
                     return;
                 }
 
-                // Confirmar la reserva
+         
                 var confirmar = MessageBox.Show(
                     $"¿Desea reservar el producto con NroSerie {nroSerie}?",
                     "Confirmar Reserva",
@@ -110,7 +108,7 @@ namespace BuenosAires.BodegaBA
         private void ReservarProducto(string nroSerie)
         {
             var dc = new DcProductoAnwo();
-            string usuario = Environment.UserName; // O bien obtener de sesión o parámetro
+            string usuario = Environment.UserName; 
 
             dc.Reservar(nroSerie, usuario);
 
@@ -121,7 +119,7 @@ namespace BuenosAires.BodegaBA
             else
             {
                 MessageBox.Show(dc.Mensaje, "Reserva Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                CargarProductos(); // Refrescar lista para mostrar cambio
+                CargarProductos(); 
             }
         }
 
