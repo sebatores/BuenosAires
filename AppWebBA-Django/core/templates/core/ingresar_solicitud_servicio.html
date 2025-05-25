@@ -22,40 +22,51 @@
                 <div class="mb-3 row">
                     <label for="inputPassword" class="col-sm-2 col-form-label">Tipo de solicitud</label>
                     <div class="col-sm-4">
-                    <select class="form-select" aria-label="Default select example" name="tiposol">
-                        <option selected disabled>Seleccione el tipo de solicitud</option>
-                        <option value="Mantención">Mantención</option>
-                        <option value="Reparación">Reparación</option>
+                    <select class="form-select" name="tiposol">
+                        <option disabled {% if not tiposol %}selected{% endif %}>Seleccione el tipo de solicitud</option>
+                        <option value="Mantención" {% if tiposol == "Mantención" %}selected{% endif %}>Mantención</option>
+                        <option value="Reparación" {% if tiposol == "Reparación" %}selected{% endif %}>Reparación</option>
                     </select>
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="inputPassword" class="col-sm-2 col-form-label">Descripcion</label>
                     <div class="col-sm-4">
-                        <textarea class="form-control" rows="4" name="descsol"></textarea>
+                        <textarea class="form-control" rows="4" name="descsol">{{ descsol|default:"" }}</textarea>
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="inputPassword" class="col-sm-2 col-form-label">Fecha de la visita</label>
                     <div class="col-sm-3">
-                        <input type="" class="form-control" name="fechavisita" value="25/02/2022">
+                        <input type="" class="form-control" name="fechavisita" value="{{ fechavisita|default:'25/02/2022' }}">
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <label for="inputPassword" class="col-sm-2 col-form-label">Hora de la visita</label>
                     <div class="col-sm-3">
-                        <input type="" class="form-control" name="horavisita" value="09:00">
+                        <input type="" class="form-control" name="horavisita" value="{{ horavisita|default:'09:00' }}">
                     </div>
                 </div>
+                {% if response_code == None %}
+                    <div class="formulario_botones">
 
-                <div class="formulario_botones">
-
-                    <input type="submit" class="btn btn-success btn-lg formulario_boton" value="Pagar">
-                    <button class="btn btn-light formulario_boton btn-lg" type="submit">Limpiar</button>
-                    
-                </div>
+                        <input type="submit" class="btn btn-success btn-lg formulario_boton" value="Pagar">
+                        <button class="btn btn-light formulario_boton btn-lg" type="submit">Limpiar</button>
+                        
+                    </div>
+                {% elif response_code == 0 %}
+                     <div style="text-align: center; margin-top: 20px; font-weight: bold; color: green;">
+                        <h3>¡Su Solicitud de Servicio ha sido generada con éxito!</h3>
+                    </div>
+                {% elif response_code == -1  %}
+                    <div style="text-align: center; margin-top: 20px; font-weight: bold; color: red;">
+                        <h3>¡Su Solicitud de Servicio no Pudo ser Realizado con Exito!<br>Por Favor Intente Nuevamente Más Tarde...</h3>
+                    </div>
+                {% endif %}
 
             </div>
+
+          
             
         </div>
                     

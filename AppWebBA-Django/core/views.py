@@ -1,8 +1,9 @@
+from datetime import datetime
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_exempt
-from .models import Producto, PerfilUsuario
+from .models import Producto, PerfilUsuario, SolicitudServicio
 from .forms import ProductoForm, IniciarSesionForm
 from .forms import RegistrarUsuarioForm, PerfilUsuarioForm
 #from .error.transbank_error import TransbankError
@@ -74,8 +75,12 @@ def tienda(request):
 
 @csrf_exempt
 def ficha(request, id):
-    data = {"mesg": "", "producto": None}
-    
+    mesg = ""
+
+    if request.user.is_authenticated:
+        perfil = PerfilUsuario.objects.get(user=request.user)
+
+
     # Cuando el usuario hace clic en el boton COMPRAR, se ejecuta el METODO POST del
     # formulario de ficha.html, con lo cual se redirecciona la página para que
     # llegue a esta VISTA llamada "FICHA". A continuacion se verifica que sea un POST 
@@ -83,21 +88,19 @@ def ficha(request, id):
     # es decir, se comprueba que la compra sea realizada por un CLIENTE REGISTRADO.
     # Si se tata de un CLIENTE REGISTRADO, se redirecciona a la vista "iniciar_pago"
     if request.method == "POST":
-        if request.user.is_authenticated and not request.user.is_staff:
+        if request.user.is_authenticated and not request.user.is_staff and perfil.tipousu == 'Cliente':
             request.session['tiposol'] = 'Instalación'
             return redirect(iniciar_pago, id)
         else:
             # Si el usuario que hace la compra no ha iniciado sesión,
             # entonces se le envía un mensaje en la pagina para indicarle
             # que primero debe iniciar sesion antes de comprar
-            data["mesg"] = "¡Para poder comprar debe iniciar sesión como cliente!"
+            mesg = "¡Para poder comprar debe iniciar sesión como cliente!"
 
     # Si visitamos la URL de FICHA y la pagina no nos envia un METODO POST, 
     # quiere decir que solo debemos fabricar la pagina y devolvera al browser
     # para que se muestren los datos de la FICHA
     
-    
-
     response = requests.get('http://127.0.0.1:8001/BuenosAiresApiRest/obtener_equipos_en_bodega')
 
     if response.status_code == 200:
@@ -112,12 +115,17 @@ def ficha(request, id):
         precio_clp = producto["precio"]
         precio_en_usd = round(precio_clp * precio_usd, 2) if precio_usd else 0
 
+    response_code = request.session.pop('response_code', None) 
+
     data = {
         "producto": producto,
-        "precio_usd": precio_en_usd
+        "precio_usd": precio_en_usd,
+        "mesg": mesg,
+        "response_code": response_code,
     }
-    
-    
+
+    print(data)
+
     return render(request, "core/ficha.html", data)
 
 @csrf_exempt
@@ -202,42 +210,73 @@ def pago_exitoso(request):
 
         tiposol = request.session.get('tiposol')
 
-        if tiposol == 'Instalación':
-            descsol = 'Instalar equipo'
-            fechavisita = '2025-05-23'
-            print('esta es la fecha de visita pero instalacion: ', fechavisita)
+        response_code = response['response_code']
+        idprod = request.session.get('idprod')
+
+        if response_code == 0:
+            if tiposol == 'Instalación':
+                descsol = 'Instalar equipo'
+                fechavisita = '2025-05-23 14:30:00'
+                print('esta es la fecha de visita pero instalacion: ', fechavisita)
+                descprod = request.session.get('descprod')
+                request.session['response_code'] = response_code
+                
+
+            else:
+                descprod = request.session.get('tiposol')
+                descsol = request.session.get('descsol')
+                fechavisita = request.session.get('fechavisita')
+                horavisita = request.session.get('horavisita')
+                fechavisita = fechavisita.replace("/", "-")
+                partes = fechavisita.split("-")
+                if len(partes) == 3:
+                    fechavisita = f"{partes[2]}-{partes[1]}-{partes[0]}"
+                
+                fecha_hora_str = f"{fechavisita} {horavisita}"
+                fechavisita = datetime.strptime(fecha_hora_str, "%Y-%m-%d %H:%M")
+                request.session['response_code'] = response_code
+                request.session['tiposol'] = tiposol
+                request.session['descsol'] = descsol
+                request.session['fechavisita'] = fechavisita.strftime('%d/%m/%Y')
+                request.session['hora'] = horavisita
+                print('la fecha de visita es: ',fechavisita)
+                
+                
+
+            rutcli = perfil.rut
+
+            try:
+                cursor = connection.cursor()
+
+                cursor.execute("""
+                    EXEC SP_CREAR_SOLICITUD_SERVICIO
+                        @tiposol = %s,
+                        @fechavisita = %s,
+                        @descsol = %s,
+                        @descfac = %s,
+                        @monto = %s,
+                        @rutcli = %s,
+                        @idprod = %s
+                """, [tiposol, fechavisita, descsol, descprod, response['amount'], rutcli, idprod])
+
+                print("Solicitud de servicio creada correctamente.")
+
+                if tiposol == 'Instalación':
+                    return redirect('ficha', id=idprod)
+                else:
+                    return redirect('ingresar_solicitud_servicio')
+
+            except Exception as e:
+                print("Error al crear la solicitud de servicio:", e)
 
         else:
-            descsol = request.session.get('descsol')
-            fechavisita = request.session.get('fechavisita')
-            fechavisita = fechavisita.replace("/", "-")
-            partes = fechavisita.split("-")
-            if len(partes) == 3:
-                fechavisita = f"{partes[2]}-{partes[1]}-{partes[0]}"
-            print('la fecha de visita es: ',fechavisita)
+            request.session['response_code'] = response_code
+            if tiposol == 'Instalación':
+                    return redirect('ficha', id=idprod)
+            else:
+                return redirect('ingresar_solicitud_servicio')
 
-        idprod = request.session.get('idprod')
-        descprod = request.session.get('descprod')
-        rutcli = perfil.rut
-
-        try:
-            cursor = connection.cursor()
-
-            cursor.execute("""
-                EXEC SP_CREAR_SOLICITUD_SERVICIO
-                    @tiposol = %s,
-                    @fechavisita = %s,
-                    @descsol = %s,
-                    @descfac = %s,
-                    @monto = %s,
-                    @rutcli = %s,
-                    @idprod = %s
-            """, [tiposol, fechavisita, descsol, descprod, response['amount'], rutcli, idprod])
-
-            print("Solicitud de servicio creada correctamente.")
-
-        except Exception as e:
-            print("Error al crear la solicitud de servicio:", e)
+        print('codigo de respuesta', response['response_code'])
 
         context = {
             "buy_order": response['buy_order'],
@@ -250,11 +289,9 @@ def pago_exitoso(request):
             "email": user.email,
             "rut": perfil.rut,
             "dirusu": perfil.dirusu,
-            "response_code": response['response_code'],
+            "response_code": response_code,
         }
-
-    
-        return render(request, "core/pago_exitoso.html", context)
+ 
     else:
         return redirect(home)
 
@@ -296,20 +333,34 @@ def administrar_productos(request, action, id):
     return render(request, "core/administrar_productos.html", data)
 
 def registrar_usuario(request):
+
+    mesg = ''
+
     if request.method == 'POST':
         form = RegistrarUsuarioForm(request.POST)
+        
         if form.is_valid():
             user = form.save()
             rut = request.POST.get("rut")
-            tipousu = request.POST.get("tipousu")
+            tipousu = 'Cliente'
             dirusu = request.POST.get("dirusu")
             PerfilUsuario.objects.update_or_create(user=user, rut=rut, tipousu=tipousu, dirusu=dirusu)
+            print('usuario creado: ', user, rut, tipousu, dirusu)
             return redirect(iniciar_sesion)
+        else:
+            mesg = 'No es pudo crear el usuario.'
     form = RegistrarUsuarioForm()
-    return render(request, "core/registrar_usuario.html", context={'form': form})
+
+    data = {
+        'form': form,
+        'mesg': mesg,
+    }
+
+    return render(request, "core/registrar_usuario.html", data)
 
 def perfil_usuario(request):
-    data = {"mesg": "", "form": PerfilUsuarioForm}
+    mesg = ''
+    form = PerfilUsuarioForm
 
     if request.method == 'POST':
         form = PerfilUsuarioForm(request.POST)
@@ -324,7 +375,7 @@ def perfil_usuario(request):
             perfil.tipousu = request.POST.get("tipousu")
             perfil.dirusu = request.POST.get("dirusu")
             perfil.save()
-            data["mesg"] = "¡Sus datos fueron actualizados correctamente!"
+            mesg = "¡Sus datos fueron actualizados correctamente!"
 
     perfil = PerfilUsuario.objects.get(user=request.user)
     form = PerfilUsuarioForm()
@@ -334,7 +385,12 @@ def perfil_usuario(request):
     form.fields['rut'].initial = perfil.rut
     form.fields['tipousu'].initial = perfil.tipousu
     form.fields['dirusu'].initial = perfil.dirusu
-    data["form"] = form
+
+    data = {
+        'form': form,
+        'mesg': mesg
+    }
+
     return render(request, "core/perfil_usuario.html", data)
 
 def obtener_solicitudes_de_servicio(request):
@@ -384,6 +440,13 @@ def obtener_solicitudes_de_servicio(request):
 
 def ingresar_solicitud_servicio(request):
     id = 1
+
+    if request.method == "GET":
+        tiposol = request.session.pop("tiposol", "")
+        descsol = request.session.pop("descsol", "")
+        fechavisita = request.session.pop("fechavisita", "")
+        horavisita = request.session.pop("horavisita", "")
+
     if request.method == "POST":
         if request.user.is_authenticated and not request.user.is_staff:
 
@@ -398,8 +461,23 @@ def ingresar_solicitud_servicio(request):
             request.session['horavisita'] = horavisita
 
             return redirect(iniciar_pago, id)
+        
+    response_code = request.session.pop('response_code', None) 
 
-    return render(request, "core/ingresar_solicitud_servicio.html")
+    data = {
+        "response_code": response_code,
+        "tiposol": tiposol,
+        "descsol": descsol,
+        "fechavisita": fechavisita,
+        "horavisita": horavisita,
+    }
+
+
+    print('Este es el response_code de la ingresar solicitud: ', response_code)
+
+    print('esta es la data de ingresar solicitud: ', data)
+
+    return render(request, "core/ingresar_solicitud_servicio.html", data)
 
 def miscompras(request):
     perfil = PerfilUsuario.objects.get(user=request.user)
@@ -425,7 +503,12 @@ def miscompras(request):
             @rut     = %s
         """, [tipousu, rut])
 
+        print(tipousu)
+        print(rut)
+
         guias_results = cursor.fetchall()
+
+        print('guias', guias_results)
 
         for factura_row in facturas_results:
             factura = {
@@ -436,17 +519,17 @@ def miscompras(request):
                 'montofac': factura_row[4],
                 'nrosol': factura_row[5] if factura_row[5] else 'No aplica',
                 'estadosol': factura_row[6] if factura_row[6] else 'No aplica',  
-                'nrogd': 'No aplica',
-                'estadogd': 'No aplica',  
+                'nrogd': '',
+                'estadogd': '',  
             }
 
             for guia_row in guias_results:
                 if factura['nrofac'] == guia_row[0]:
                     factura['nrogd'] = guia_row[1]
                     factura['estadogd'] = guia_row[2] 
-                    break 
-
-    lista.append(factura)
+                    break
+                    
+            lista.append(factura)
 
     data = {
         'tipousu': tipousu,
@@ -467,3 +550,29 @@ def obtener_valor_usd():
     except:
         pass
     return 0
+
+
+def modificar_solicitud(request, accion, id):
+    print('entro')
+
+    print(accion)
+    id = ''.join(c for c in str(id) if c.isdigit())
+
+    solicitudservicio = SolicitudServicio.objects.get(nrosol=id)
+
+    nrosol = solicitudservicio.nrosol
+    fechavisita = request.POST.get("fechavisita")
+    
+    if request.method == 'POST':
+
+        cursor = connection.cursor()
+
+        cursor.execute("""
+        EXEC SP_ACTUALIZAR_SOLICITUD_DE_SERVICIO 
+            @accion      = %s,
+            @nrosol      = %s,
+            @fechavisita = %s         
+        """, [accion, nrosol, fechavisita])
+        
+       
+    return redirect('obtener_solicitudes_de_servicio')

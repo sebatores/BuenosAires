@@ -8,7 +8,12 @@
 {% block content %}
     <div class="text-center">
         <h1 style="color: blue !important; font-weight: bolder;">
+          {% if tipousu == 'Cliente' %}
+            Mis Compras
+          {% elif tipousu == 'Administrador' %}
             Historial de Ventas de la Empresa
+          {% endif %}
+          
         </h1>
         <table class="table table-primary table-hover table-bordered border-dark">
             <theader>
@@ -26,15 +31,15 @@
             {% if lista %}
               {% for fac in lista %}
                 <tr class="{% cycle 'table-secondary' 'table-light' %} table-bordered border-dark">
-                  <td>1</td>
-                  <td>Ana Torres</td>
-                  <td>23-02-2022</td>
-                  <td>Aire Wifi 9000 btu</td>
-                  <td>25000</td>
-                  <td>11</td>
-                  <td>Entregado</td>
-                  <td>111</td>
-                  <td>Cerrada</td>
+                  <td>{{ fac.nrofac }}</td>
+                  <td>{{ fac.nomcli }}</td>
+                  <td>{{ fac.fechafac }}</td>
+                  <td>{{ fac.descfac }}</td>
+                  <td>{{ fac.montofac }}</td>
+                  <td>{{ fac.nrogd }}</td>
+                  <td>{{ fac.estadogd }}</td>
+                  <td>{{ fac.nrosol }}</td>
+                  <td>{{ fac.estadosol }}</td>
                 </tr>
               {% endfor %}
             {% endif %}

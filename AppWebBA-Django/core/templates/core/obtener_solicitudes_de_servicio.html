@@ -20,7 +20,7 @@
                 <th>Técnico</th>
                 <th>Descripción</th>
                 <th>Estado SS</th>
-                {% if tipousu == 'Técnico' %}
+                {% if tipousu == 'Técnico' or tipousu == 'Administrador' %}
                 <th>Opciones</th>
                 {% endif %}
             </theader>
@@ -36,11 +36,24 @@
                             <td>{{ sol.nomtec }}</td>
                             <td>{{ sol.descser }}</td>
                             <td>{{ sol.estadosol }}</td>
-                            {% if tipousu == 'Técnico' %}
+                            {% if tipousu == 'Técnico' or tipousu == 'Administrador' %}
                             <td>
-                              <a href="#" class="btn btn-success">Aceptar</a>
-                              <a href="#" class="btn btn-primary">Modificar</a>
-                              <a href="#" class="btn btn-danger">Cerrar</a>
+                                <form method="post" action="{% url 'modificar_solicitud' 'aceptar' sol.nrosol %}" style="display:inline;">
+                                {% csrf_token %}
+                                    <button type="submit" class="btn btn-success">Aceptar</button>
+                                </form>
+                              <a class="btn btn-primary" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#modificarModal"
+                                data-nrosol="{{ sol.nrosol }}"
+                                data-fecha="{{ sol.fechavisita|date:'Y-m-d' }}"
+                                data-hora="{{ sol.hora }}">
+                                Modificar
+                                </a>
+                                <form method="post" action="{% url 'modificar_solicitud' 'cerrar' sol.nrosol %}" style="display:inline;">
+                                {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">Cerrar</button>
+                                </form>
                             </td>
                             {% endif %}
                         </tr>
@@ -58,5 +71,63 @@
          
 
     </div>
+        <div class="modal fade" id="modificarModal" tabindex="-1" aria-labelledby="modificarModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <form method="post" action="" id="modal_form">
+            {% csrf_token %}
+            <div class="modal-header">
+            <h5 class="modal-title" id="modificarModalLabel">Modificar Solicitud de Servicio</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+            <input type="hidden" name="nrosol" id="modal_nrosol">
+            <input type="hidden" name="fechavisita" id="modal_fechavisita">
+            <div class="mb-3">
+                <label for="modal_fecha" class="form-label">Fecha de la visita</label>
+                <input type="date" class="form-control" id="modal_fecha" required>
+            </div>
+            <div class="mb-3">
+                <label for="modal_hora" class="form-label">Hora de la visita</label>
+                <input type="time" class="form-control" id="modal_hora" required>
+            </div>
+            </div>
+            <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Modificar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+            </div>
+        </form>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        const modal = document.getElementById('modificarModal');
+        const form = document.getElementById('modal_form');
+
+        modal.addEventListener('show.bs.modal', function (event) {
+            const button = event.relatedTarget;
+            const nrosol = button.getAttribute('data-nrosol');
+            const fecha = button.getAttribute('data-fecha');
+            const hora = button.getAttribute('data-hora');
+
+            document.getElementById('modal_nrosol').value = nrosol;
+            document.getElementById('modal_fecha').value = fecha;
+            document.getElementById('modal_hora').value = hora;
+
+            const nuevaUrl = `/modificar_solicitud/modificar/${nrosol}`;
+            form.action = nuevaUrl;
+
+            form.addEventListener('submit', function (e) {
+                const fecha = document.getElementById('modal_fecha').value;
+                const hora = document.getElementById('modal_hora').value;
+                const fechavisita = `${fecha} ${hora}`;
+                document.getElementById('modal_fechavisita').value = fechavisita;
+            });
+        });
+        });
+    </script>
 {% endblock content %}
+
 

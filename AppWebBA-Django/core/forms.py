@@ -17,11 +17,10 @@ class IniciarSesionForm(Form):
 
 class RegistrarUsuarioForm(UserCreationForm):
     rut = forms.CharField(max_length=20, required=True, label="Rut")
-    tipousu = forms.CharField(max_length=50, required=True, label="Tipo de usuario", initial='admin')
     dirusu = forms.CharField(max_length=300, required=True, label="Dirección")
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email', 'tipousu', 'rut', 'dirusu']
+        fields = ['username', 'first_name', 'last_name', 'email', 'rut', 'dirusu']
 
 class PerfilUsuarioForm(Form):
     first_name = forms.CharField(max_length=150, required=True, label="Nombres")

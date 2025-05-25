@@ -1,7 +1,7 @@
 from django.db import connection
 
 SP_CREAR_FACTURA = """
-CREATE PROCEDURE [dbo].[SP_CREAR_FACTURA]
+CREATE OR ALTER PROCEDURE [dbo].[SP_CREAR_FACTURA]
     @descfac VARCHAR(100),
     @monto INT,
     @rutcli VARCHAR(20),
@@ -18,9 +18,9 @@ END
 """
 
 SP_CREAR_SOLICITUD_SERVICIO = """
-CREATE PROCEDURE [dbo].[SP_CREAR_SOLICITUD_SERVICIO]
+CREATE OR ALTER PROCEDURE [dbo].[SP_CREAR_SOLICITUD_SERVICIO]
     @tiposol VARCHAR(100),
-    @fechavisita DATE,
+    @fechavisita DATETIME2,
     @descsol VARCHAR(400),
     @descfac VARCHAR(100),
     @monto INT,
@@ -69,7 +69,7 @@ END
 """
 
 SP_CREAR_GUIA_DESPACHO = """
-CREATE PROCEDURE [dbo].[SP_CREAR_GUIA_DESPACHO]
+CREATE OR ALTER PROCEDURE [dbo].[SP_CREAR_GUIA_DESPACHO]
     @nrofac INT,
     @idprod INT
 
@@ -83,11 +83,15 @@ BEGIN
     INSERT INTO GUIADESPACHO (nrogd, estadogd, nrofac, idprod)
     VALUES (@nrogd, 'En bodega', @nrofac, @idprod)
 
+    UPDATE TOP (1) StockProducto
+    SET nrofac = @nrofac
+    WHERE idprod = @idprod AND nrofac IS NULL;
+
 END
 """
 
 SP_OBTENER_FACTURAS = """
-CREATE PROCEDURE [dbo].[SP_OBTENER_FACTURAS]
+CREATE OR ALTER PROCEDURE [dbo].[SP_OBTENER_FACTURAS]
 	@tipousu VARCHAR(50),
 	@rut     VARCHAR(20)
  
@@ -130,7 +134,7 @@ END
 """
 
 SP_OBTENER_GUIAS_DE_DESPACHO = """
-CREATE PROCEDURE [dbo].[SP_OBTENER_GUIAS_DE_DESPACHO]
+CREATE OR ALTER PROCEDURE [dbo].[SP_OBTENER_GUIAS_DE_DESPACHO]
     @tipousu VARCHAR(50),
     @rut     VARCHAR(20)
 
@@ -139,45 +143,87 @@ BEGIN
 
     SET NOCOUNT ON;
     
+    
     IF (@tipousu = 'Cliente')
+    BEGIN
         SELECT
-        CASE 
-            WHEN gd.nrogd IS NULL THEN 'No aplica'
-            ELSE CAST(gd.nrogd AS VARCHAR(20))
-        END AS nrogd,
-        CASE 
-            WHEN gd.estadogd IS NULL THEN 'No aplica'
-            ELSE CAST(gd.estadogd AS VARCHAR(20)) 
-        END AS estadogd
+            fac.nrofac,
+            CASE 
+                WHEN gd.nrogd IS NULL THEN 'No aplica'
+                ELSE CAST(gd.nrogd AS VARCHAR(20))
+            END AS nrogd,
+            CASE 
+                WHEN gd.estadogd IS NULL THEN 'No aplica'
+                ELSE CAST(gd.estadogd AS VARCHAR(20)) 
+            END AS estadogd
         FROM FACTURA fac
         LEFT JOIN GuiaDespacho gd ON fac.nrofac = gd.nrofac
         WHERE fac.rutcli = @rut
         ORDER BY fac.nrofac
-    
-    IF (@tipousu = 'Administrador')
-    
+    END
+    ELSE IF (@tipousu = 'Administrador')
+    BEGIN
         SELECT
-        CASE 
-            WHEN gd.nrogd IS NULL THEN 'No aplica'
-            ELSE CAST(gd.nrogd AS VARCHAR(20))
-        END AS nrogd,
-        CASE 
-            WHEN gd.estadogd IS NULL THEN 'No aplica'
-            ELSE CAST(gd.estadogd AS VARCHAR(20)) 
-        END AS estadogd
+            fac.nrofac,
+            CASE 
+                WHEN gd.nrogd IS NULL THEN 'No aplica'
+                ELSE CAST(gd.nrogd AS VARCHAR(20))
+            END AS nrogd,
+            CASE 
+                WHEN gd.estadogd IS NULL THEN 'No aplica'
+                ELSE CAST(gd.estadogd AS VARCHAR(20)) 
+            END AS estadogd
         FROM FACTURA fac
         LEFT JOIN GuiaDespacho gd ON fac.nrofac = gd.nrofac
         ORDER BY fac.nrofac
+    END
 
 END
 """
 
-# SP_ACTUALIZAR_SOLICITUD_DE_SERVICIO = """
+SP_ACTUALIZAR_SOLICITUD_DE_SERVICIO = """
+CREATE OR ALTER PROCEDURE [dbo].[SP_ACTUALIZAR_SOLICITUD_DE_SERVICIO]
+    @accion VARCHAR(50),
+    @nrosol INT,
+    @fechavisita DATETIME
 
-# """
+AS
+BEGIN
+
+    SET NOCOUNT ON;
+
+    IF (@accion = 'aceptar')
+    BEGIN
+
+        UPDATE SolicitudServicio
+            SET estadosol = 'Aceptada'
+        WHERE nrosol = @nrosol;
+        
+    END
+    ELSE IF (@accion = 'modificar')
+    BEGIN
+
+        UPDATE SolicitudServicio
+            SET 
+                fechavisita = @fechavisita,
+                estadosol = 'Modificada'
+        WHERE nrosol = @nrosol;
+        
+    END
+    ELSE IF (@accion = 'cerrar')
+    BEGIN
+
+        UPDATE SolicitudServicio
+            SET estadosol = 'Cerrada'
+        WHERE nrosol = @nrosol;
+        
+    END
+
+END
+"""
 
 SP_OBTENER_EQUIPOS_EN_BODEGA = """
-CREATE PROCEDURE [dbo].[SP_OBTENER_EQUIPOS_EN_BODEGA]
+CREATE OR ALTER PROCEDURE [dbo].[SP_OBTENER_EQUIPOS_EN_BODEGA]
 AS
 BEGIN
 	SET NOCOUNT ON;
@@ -209,7 +255,7 @@ END
 """
 
 SP_OBTENER_PRODUCTOS = """
-CREATE PROCEDURE [dbo].[SP_OBTENER_PRODUCTOS]
+CREATE OR ALTER PROCEDURE [dbo].[SP_OBTENER_PRODUCTOS]
 AS
 BEGIN
 	SET NOCOUNT ON;
@@ -219,7 +265,7 @@ END
 """
 
 SP_OBTENER_SOLICITUDES_DE_SERVICIO = """
-CREATE PROCEDURE [dbo].[SP_OBTENER_SOLICITUDES_DE_SERVICIO]
+CREATE OR ALTER PROCEDURE [dbo].[SP_OBTENER_SOLICITUDES_DE_SERVICIO]
 	@tipousu VARCHAR(50),
 	@rut     VARCHAR(50)
 AS
@@ -240,8 +286,8 @@ BEGIN
 			sol.nrosol, 
 			usucli.first_name + ' '  + usucli.last_name AS nomcli, 
 			sol.tiposol,
-			sol.fechavisita, 
-			'10:00:00'                                  AS hora,
+			CONVERT(date, sol.fechavisita), 
+			FORMAT(sol.fechavisita, 'HH:mm')            AS hora,
 			usutec.first_name + ' '  + usutec.last_name AS nomtec,
 			sol.descsol       + ': ' + fac.descfac      AS descser,
 			sol.estadosol
@@ -262,8 +308,8 @@ BEGIN
 			sol.nrosol, 
 			usucli.first_name + ' '  + usucli.last_name AS nomcli, 
 			sol.tiposol,
-			sol.fechavisita, 
-			'10:00:00'                                  AS hora,
+			CONVERT(date, sol.fechavisita), 
+			FORMAT(sol.fechavisita, 'HH:mm')            AS hora,
 			usutec.first_name + ' '  + usutec.last_name AS nomtec,
 			sol.descsol       + ': ' + fac.descfac      AS descser,
 			sol.estadosol
@@ -284,8 +330,8 @@ BEGIN
 			sol.nrosol, 
 			usucli.first_name + ' '  + usucli.last_name AS nomcli, 
 			sol.tiposol,
-			sol.fechavisita, 
-			'10:00:00'                                  AS hora,
+			CONVERT(date, sol.fechavisita), 
+			FORMAT(sol.fechavisita, 'HH:mm')            AS hora,
 			usutec.first_name + ' '  + usutec.last_name AS nomtec,
 			sol.descsol       + ': ' + fac.descfac      AS descser,
 			sol.estadosol
@@ -297,14 +343,13 @@ BEGIN
 			INNER JOIN auth_user     usucli ON percli.user_id =  usucli.id
 			INNER JOIN auth_user     usutec ON pertec.user_id =  usutec.id
 		ORDER BY
-			usucli.first_name,
-			usutec.first_name
+			sol.nrosol
 
 END
 """
 
 SP_OBTENER_TODOS_LOS_USUARIOS = """
-CREATE PROCEDURE [dbo].[SP_OBTENER_TODOS_LOS_USUARIOS]
+CREATE OR ALTER PROCEDURE [dbo].[SP_OBTENER_TODOS_LOS_USUARIOS]
 AS
 BEGIN
 	SET NOCOUNT ON;
@@ -318,7 +363,7 @@ END
 """
 
 SP_RESERVAR_EQUIPO_ANWO = """
-CREATE PROCEDURE [dbo].[SP_RESERVAR_EQUIPO_ANWO]
+CREATE OR ALTER PROCEDURE [dbo].[SP_RESERVAR_EQUIPO_ANWO]
     @nroserieanwo NVARCHAR(100),
 	@reservado NVARCHAR(1)
 AS
@@ -446,6 +491,16 @@ def run():
     
     try:
         exec_sql(SP_OBTENER_FACTURAS)
+    except:
+        pass
+
+    try:
+        exec_sql(SP_OBTENER_GUIAS_DE_DESPACHO)
+    except:
+        pass
+
+    try:
+        exec_sql(SP_ACTUALIZAR_SOLICITUD_DE_SERVICIO)
     except:
         pass
 

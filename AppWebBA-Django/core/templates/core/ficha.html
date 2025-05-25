@@ -36,17 +36,29 @@
                 <h4>
                     Producto {{ producto.disponibilidad }}
                 </h4>
-                {% if producto.disponibilidad == "DISPONIBLE" %}
-                <form method="POST" class="asd">
-                    {% csrf_token %}
-                    <input type="submit" class="btn btn-success btn-lg ficha_boton" value="Comprar">
-                    {% if mesg %}
-                        <div id="form_message" class="alert alert-danger" role="alert">{{ mesg }}</div>
+                
+                
+                {% if response_code == None %}
+                    {% if producto.disponibilidad == "DISPONIBLE" %}
+                    <form method="POST" class="asd">
+                        {% csrf_token %}
+                        <input type="submit" class="btn btn-success btn-lg ficha_boton" value="Comprar">
+                        {% if mesg %}
+                            <div id="form_message" class="alert alert-danger" role="alert">{{ mesg }}</div>
+                        {% endif %}
+                    </form>
+                    {% else %}
+                        <div class="alert alert-warning" role="alert">
+                            Este producto está <strong>agotado</strong> y no se puede comprar en este momento.
+                        </div>
                     {% endif %}
-                </form>
-                {% else %}
-                    <div class="alert alert-warning" role="alert">
-                        Este producto está <strong>agotado</strong> y no se puede comprar en este momento.
+                {% elif response_code == 0 %}
+                     <div style="text-align: center; margin-top: 20px; font-weight: bold; color: green;">
+                        <h3>¡El Pago fue Realizado con Exito!</h3>
+                    </div>
+                {% elif response_code == -1  %}
+                    <div style="text-align: center; margin-top: 20px; font-weight: bold; color: red;">
+                        <h3>¡El Pago no Pudo ser Realizado con Exito!<br>Por Favor Intente Nuevamente Más Tarde...</h3>
                     </div>
                 {% endif %}
             </div>
