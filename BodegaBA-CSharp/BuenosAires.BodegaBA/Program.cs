@@ -15,12 +15,13 @@ namespace BuenosAires.BodegaBA
         [STAThread]
         static void Main()
         {
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new VentanaLogin());
+            Application.Run(new VentanaLogin());
             
             //prueba unitaria, desconmetar el login para funcionamiento normal
-            Application.Run(new MenuPrincipal());
+            //Application.Run(new MenuPrincipal());
 
         }
     }
