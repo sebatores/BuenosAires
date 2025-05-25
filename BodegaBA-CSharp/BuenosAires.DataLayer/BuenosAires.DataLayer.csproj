@@ -64,6 +64,7 @@
       <DependentUpon>BuenosAiresEDM.edmx</DependentUpon>
     </Compile>
     <Compile Include="DcProducto.cs" />
+    <Compile Include="DcProductoAnwo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

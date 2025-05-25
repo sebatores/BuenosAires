@@ -28,59 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lvAnwo = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.btnVolverAlMenuPrincipal = new System.Windows.Forms.Button();
+            this.grid = new System.Windows.Forms.DataGridView();
+            this.NroSerie = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.NombreProducto = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Precio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Reservado = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Opciones = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             this.SuspendLayout();
-            // 
-            // lvAnwo
-            // 
-            this.lvAnwo.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2,
-            this.columnHeader3,
-            this.columnHeader4,
-            this.columnHeader5});
-            this.lvAnwo.HideSelection = false;
-            this.lvAnwo.Location = new System.Drawing.Point(12, 131);
-            this.lvAnwo.Name = "lvAnwo";
-            this.lvAnwo.Size = new System.Drawing.Size(773, 273);
-            this.lvAnwo.TabIndex = 0;
-            this.lvAnwo.UseCompatibleStateImageBehavior = false;
-            this.lvAnwo.View = System.Windows.Forms.View.Details;
-            this.lvAnwo.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "Nro Serie";
-            this.columnHeader1.Width = 140;
-            // 
-            // columnHeader2
-            // 
-            this.columnHeader2.Text = "Nombre Producto";
-            this.columnHeader2.Width = 186;
-            // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Text = "Precio";
-            this.columnHeader3.Width = 124;
-            // 
-            // columnHeader4
-            // 
-            this.columnHeader4.Text = "Reservado";
-            this.columnHeader4.Width = 172;
-            // 
-            // columnHeader5
-            // 
-            this.columnHeader5.Text = "Opciones";
-            this.columnHeader5.Width = 225;
             // 
             // label1
             // 
@@ -122,34 +81,74 @@
             this.btnVolverAlMenuPrincipal.UseVisualStyleBackColor = true;
             this.btnVolverAlMenuPrincipal.Click += new System.EventHandler(this.btnVolverAlMenuPrincipal_click);
             // 
+            // grid
+            // 
+            this.grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.NroSerie,
+            this.NombreProducto,
+            this.Precio,
+            this.Reservado,
+            this.Opciones});
+            this.grid.Location = new System.Drawing.Point(12, 132);
+            this.grid.Name = "grid";
+            this.grid.Size = new System.Drawing.Size(748, 270);
+            this.grid.TabIndex = 5;
+            this.grid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // NroSerie
+            // 
+            this.NroSerie.HeaderText = "Nro Serie";
+            this.NroSerie.Name = "NroSerie";
+            // 
+            // NombreProducto
+            // 
+            this.NombreProducto.HeaderText = "Nombre Producto";
+            this.NombreProducto.Name = "NombreProducto";
+            // 
+            // Precio
+            // 
+            this.Precio.HeaderText = "Precio";
+            this.Precio.Name = "Precio";
+            // 
+            // Reservado
+            // 
+            this.Reservado.HeaderText = "Reservado";
+            this.Reservado.Name = "Reservado";
+            // 
+            // Opciones
+            // 
+            this.Opciones.HeaderText = "Opciones";
+            this.Opciones.Name = "Opciones";
+            // 
             // ReservasANWO
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 476);
+            this.Controls.Add(this.grid);
             this.Controls.Add(this.btnVolverAlMenuPrincipal);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.lvAnwo);
             this.Name = "ReservasANWO";
             this.Text = "ReservasANWO";
+            ((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.ListView lvAnwo;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btnVolverAlMenuPrincipal;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.ColumnHeader columnHeader3;
-        private System.Windows.Forms.ColumnHeader columnHeader4;
-        private System.Windows.Forms.ColumnHeader columnHeader5;
+        private System.Windows.Forms.DataGridView grid;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NroSerie;
+        private System.Windows.Forms.DataGridViewTextBoxColumn NombreProducto;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Precio;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Reservado;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Opciones;
     }
 }
