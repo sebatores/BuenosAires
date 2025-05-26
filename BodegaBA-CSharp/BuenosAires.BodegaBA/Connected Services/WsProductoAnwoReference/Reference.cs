@@ -22,10 +22,10 @@ namespace BuenosAires.BodegaBA.WsProductoAnwoReference {
         System.Threading.Tasks.Task<BuenosAires.Model.Respuesta> LeerTodosAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWsProductoAwno/Reservar", ReplyAction="http://tempuri.org/IWsProductoAwno/ReservarResponse")]
-        BuenosAires.Model.Respuesta Reservar(string nroSerieAnwo, string usuario);
+        BuenosAires.Model.Respuesta Reservar(string nroSerieAnwo);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IWsProductoAwno/Reservar", ReplyAction="http://tempuri.org/IWsProductoAwno/ReservarResponse")]
-        System.Threading.Tasks.Task<BuenosAires.Model.Respuesta> ReservarAsync(string nroSerieAnwo, string usuario);
+        System.Threading.Tasks.Task<BuenosAires.Model.Respuesta> ReservarAsync(string nroSerieAnwo);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -63,12 +63,12 @@ namespace BuenosAires.BodegaBA.WsProductoAnwoReference {
             return base.Channel.LeerTodosAsync();
         }
         
-        public BuenosAires.Model.Respuesta Reservar(string nroSerieAnwo, string usuario) {
-            return base.Channel.Reservar(nroSerieAnwo, usuario);
+        public BuenosAires.Model.Respuesta Reservar(string nroSerieAnwo) {
+            return base.Channel.Reservar(nroSerieAnwo);
         }
         
-        public System.Threading.Tasks.Task<BuenosAires.Model.Respuesta> ReservarAsync(string nroSerieAnwo, string usuario) {
-            return base.Channel.ReservarAsync(nroSerieAnwo, usuario);
+        public System.Threading.Tasks.Task<BuenosAires.Model.Respuesta> ReservarAsync(string nroSerieAnwo) {
+            return base.Channel.ReservarAsync(nroSerieAnwo);
         }
     }
 }

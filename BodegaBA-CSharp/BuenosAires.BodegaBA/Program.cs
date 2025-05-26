@@ -18,7 +18,7 @@ namespace BuenosAires.BodegaBA
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-          Application.Run(new VentanaLogin());
+            Application.Run(new VentanaLogin());
             
             //prueba unitaria, desconmetar el login para funcionamiento normal
           //Application.Run(new MenuPrincipal());

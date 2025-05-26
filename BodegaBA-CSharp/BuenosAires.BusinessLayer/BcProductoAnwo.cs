@@ -43,17 +43,22 @@ namespace BuenosAires.BusinessLayer
             this.Lista = null;
         }
 
-
-        public void ReservarProducto(string nroSerie, string usuario)
+        public void CopiarPropiedades(DcProductoAnwo dc)
         {
-            dc.Reservar(nroSerie, usuario);
             this.Accion = dc.Accion;
             this.Mensaje = dc.Mensaje;
             this.HayErrores = dc.HayErrores;
+            this.Producto = dc.ProductoAnwo;
+            this.Lista = dc.Lista;
+
+        }
 
 
-            dc.Leer(nroSerie);
-            this.Producto = dc.Producto;
+        public void Reservar(string nroserieanwo)
+        {
+            var dc = new DcProductoAnwo();
+            dc.Reservar(nroserieanwo);
+            this.CopiarPropiedades(dc);
         }
 
     }

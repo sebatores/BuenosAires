@@ -386,6 +386,42 @@ BEGIN
 END
 """
 
+#agregar
+SP_OBTENER_EQUIPOS_ANWO = """
+CREATE OR ALTER PROCEDURE [dbo].[SP_OBTENER_EQUIPOS_ANWO]
+    @nroserieanwo VARCHAR(200) = NULL
+    
+AS
+BEGIN
+
+    SET NOCOUNT ON;
+    
+    IF (@nroserieanwo IS NULL)
+    BEGIN
+
+        SELECT 
+            nroserieanwo,
+            nomprodanwo,
+            precioanwo,
+            reservado
+        FROM AnwoStockProducto
+    END
+    ELSE
+    BEGIN
+
+        SELECT 
+            nroserieanwo,
+            nomprodanwo,
+            precioanwo,
+            reservado
+        FROM AnwoStockProducto
+        WHERE nroserieanwo = @nroserieanwo
+    END
+END
+"""
+
+
+
 def exec_sql(query):
     with connection.cursor() as cursor:
         cursor.execute(query)
@@ -528,6 +564,14 @@ def run():
         exec_sql(SP_RESERVAR_EQUIPO_ANWO)
     except:
         pass
+    
+    #agregar
+    try:
+        exec_sql(SP_OBTENER_EQUIPOS_ANWO)
+    except:
+        pass
+    
+    
 
     
     

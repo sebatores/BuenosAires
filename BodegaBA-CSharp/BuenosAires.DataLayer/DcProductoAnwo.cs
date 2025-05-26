@@ -12,7 +12,7 @@ namespace BuenosAires.DataLayer
         public string Accion = "";
         public string Mensaje = "";
         public bool HayErrores = false;
-        public ProductoAnwo Producto = null;
+        public ProductoAnwo ProductoAnwo = null;
         public List<ProductoAnwo> Lista = null;
 
         public DcProductoAnwo()
@@ -25,7 +25,7 @@ namespace BuenosAires.DataLayer
             this.Accion = accion;
             this.Mensaje = "";
             this.HayErrores = false;
-            this.Producto = null;
+            this.ProductoAnwo = null;
             this.Lista = null;
         }
 
@@ -70,7 +70,7 @@ namespace BuenosAires.DataLayer
                     }
                     else
                     {
-                        Producto = resultado;
+                        ProductoAnwo = resultado;
                         Mensaje = $"Producto ANWO con nroserie {nroserieanwo} cargado correctamente";
                     }
                 }
@@ -82,31 +82,31 @@ namespace BuenosAires.DataLayer
             }
         }
 
-        public void Reservar(string nroserieanwo, string usuario)
+        public void Reservar(string nroserieanwo)
         {
-            Inicializar($"reservar el producto ANWO con nroserie '{nroserieanwo}' para usuario '{usuario}'");
+            Inicializar($"reservar el producto ANWO con nroserie '{nroserieanwo}'");
             try
             {
-                using (var bd = new base_datosEntities())
+                var bd = new base_datosEntities();
+                var encontrado = bd.AnwoStockProducto.FirstOrDefault(p => p.nroserieanwo == nroserieanwo);
+                if (encontrado == null)
                 {
-                    var paramNroSerie = new SqlParameter("@nroserieanwo", nroserieanwo);
-                    var paramUser = new SqlParameter("@usuario", usuario);
-                    var paramMensaje = new SqlParameter("@mensaje", System.Data.SqlDbType.VarChar, 500)
-                    {
-                        Direction = System.Data.ParameterDirection.Output
-                    };
-
-                    bd.Database.ExecuteSqlCommand(
-                        "EXEC SP_RESERVAR_EQUIPO_ANWO @nroserieanwo, @usuario, @mensaje OUTPUT",
-                        paramNroSerie, paramUser, paramMensaje);
-
-                    Mensaje = paramMensaje.Value?.ToString() ?? "Reserva completada";
+                    this.Mensaje = $"No fue posible {Accion} pues no existe en la BD";
                 }
+                else
+                {
+                    encontrado.reservado = "S";
+                    bd.SaveChanges();
+                    this.ProductoAnwo = new ProductoAnwo();
+                    Util.CopiarPropiedades(encontrado, this.ProductoAnwo);
+                    this.Mensaje = $"El producto '{ProductoAnwo.NroSerieAnwo}' fue reservado";
+                }
+                bd.Dispose();
             }
             catch (Exception ex)
             {
-                HayErrores = true;
-                Mensaje = Util.MensajeError(Accion, "DcProductoAnwo.Reservar", ex);
+                this.HayErrores = true;
+                this.Mensaje = Util.MensajeError(this.Accion, $"No fue posible ", ex);
             }
         }
     }

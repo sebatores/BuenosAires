@@ -117,9 +117,8 @@ public partial class ReservasANWO : Form
         private void ReservarProducto(string nroSerie)
         {
             var sc = new ScProductoAnwo();
-            string usuario = Environment.UserName;
 
-            sc.Reservar(nroSerie, usuario);
+            sc.Reservar(nroSerie);
 
             if (sc.HayErrores)
             {

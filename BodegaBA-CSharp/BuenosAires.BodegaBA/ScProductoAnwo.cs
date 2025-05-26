@@ -37,9 +37,9 @@ namespace BuenosAires.BodegaBA
             CopiarPropiedades(respuesta);
         }
 
-        public void Reservar(string nroSerie, string usuario)
+        public void Reservar(string nroSerie)
         {
-            var respuesta = getWs().Reservar(nroSerie, usuario);
+            var respuesta = getWs().Reservar(nroSerie);
             CopiarPropiedades(respuesta);
         }
     }

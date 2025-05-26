@@ -28,7 +28,7 @@ namespace BuenosAires.BodegaBA
             sc.Autenticar("Bodeguero", txtCuenta.Text, txtPassword.Text);
             if (sc.Autenticado)
             {
-                new VentanaProducto(sc.NombreUsuario + "(" + sc.TipoUsuario + ")").Show();
+                new MenuPrincipal().Show();
                 Hide();
             }
             else
