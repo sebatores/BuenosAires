@@ -10,13 +10,16 @@ using System.Windows.Forms;
 using BuenosAires.DataLayer;
 using BuenosAires.Model.Utiles;
 using BuenosAires.ServiceProxy;
+using BuenosAires.Model;
+
+
 
 
 namespace BuenosAires.BodegaBA
 {
-    //nuevo agregado (eithan)
-    public partial class ReservasANWO : Form
-    {
+//nuevo agregado (eithan)
+public partial class ReservasANWO : Form
+{
         public ReservasANWO()
         {
             InitializeComponent();
@@ -28,7 +31,7 @@ namespace BuenosAires.BodegaBA
 
             ConfigurarGrid();
          }
-
+        
         private void ConfigurarGrid()
         {
             grid.Columns.Clear();
@@ -38,14 +41,15 @@ namespace BuenosAires.BodegaBA
             grid.Columns.Add("Precio", "Precio");
             grid.Columns.Add("Reservado", "Reservado");
 
-            var btnColumn = new DataGridViewButtonColumn();
-            btnColumn.Name = "Opciones";
-            btnColumn.HeaderText = "Opciones";
-            btnColumn.Text = "Reservar";
-            btnColumn.UseColumnTextForButtonValue = true;
+            var btnColumn = new DataGridViewButtonColumn
+            {
+                Name = "Opciones",
+                HeaderText = "Opciones",
+                Text = "Reservar",
+                UseColumnTextForButtonValue = true
+            };
             grid.Columns.Add(btnColumn);
 
-       
             grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             grid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             grid.MultiSelect = false;
@@ -53,25 +57,24 @@ namespace BuenosAires.BodegaBA
 
         private void CargarProductos()
         {
-            var dc = new DcProductoAnwo();
-            dc.LeerTodos();
+            var sc = new ScProductoAnwo();
+            sc.LeerTodos();
 
-            if (dc.HayErrores)
+            if (sc.HayErrores)
             {
-                MessageBox.Show(dc.Mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(sc.Mensaje, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             grid.Rows.Clear();
 
-            foreach (var prod in dc.Lista)
+            foreach (var prod in sc.Lista)
             {
-            
                 grid.Rows.Add(
                     prod.NroSerieAnwo,
                     prod.NomProdAnwo,
-                    prod.PrecioAnwo.ToString("C"), 
-                    prod.Reservado == "1" ? "si" : "no"
+                    prod.PrecioAnwo.ToString("C"),
+                    prod.Reservado == "1" ? "sí" : "no"
                 );
             }
         }
@@ -79,7 +82,7 @@ namespace BuenosAires.BodegaBA
         private void grid_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex < 0)
-                return; 
+                return;
 
             if (grid.Columns[e.ColumnIndex].Name == "Opciones")
             {
@@ -91,7 +94,13 @@ namespace BuenosAires.BodegaBA
                     return;
                 }
 
-         
+                string reservado = grid.Rows[e.RowIndex].Cells["Reservado"].Value?.ToString();
+                if (reservado == "sí")
+                {
+                    MessageBox.Show("Este producto ya está reservado.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
                 var confirmar = MessageBox.Show(
                     $"¿Desea reservar el producto con NroSerie {nroSerie}?",
                     "Confirmar Reserva",
@@ -107,19 +116,19 @@ namespace BuenosAires.BodegaBA
 
         private void ReservarProducto(string nroSerie)
         {
-            var dc = new DcProductoAnwo();
-            string usuario = Environment.UserName; 
+            var sc = new ScProductoAnwo();
+            string usuario = Environment.UserName;
 
-            dc.Reservar(nroSerie, usuario);
+            sc.Reservar(nroSerie, usuario);
 
-            if (dc.HayErrores)
+            if (sc.HayErrores)
             {
-                MessageBox.Show(dc.Mensaje, "Error al reservar", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(sc.Mensaje, "Error al reservar", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
-                MessageBox.Show(dc.Mensaje, "Reserva Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                CargarProductos(); 
+                MessageBox.Show(sc.Mensaje, "Reserva Exitosa", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                CargarProductos();
             }
         }
 
