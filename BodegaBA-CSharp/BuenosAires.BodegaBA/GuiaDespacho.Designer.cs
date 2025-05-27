@@ -1,4 +1,17 @@
-﻿namespace BuenosAires.BodegaBA
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using BuenosAires.BodegaBA.
+
+
+
+namespace BuenosAires.BodegaBA
 {
     partial class GuiaDespacho
     {
