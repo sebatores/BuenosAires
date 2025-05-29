@@ -8,6 +8,8 @@ namespace BuenosAires.Model
     public class Respuesta
     {
         [DataMember]
+        public string JsonStockProducto { get; set; }
+        [DataMember]
         public string Accion { get; set; }
         [DataMember]
         public string Mensaje { get; set; }
