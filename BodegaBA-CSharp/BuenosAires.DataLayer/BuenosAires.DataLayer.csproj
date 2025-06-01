@@ -65,6 +65,7 @@
     </Compile>
     <Compile Include="DcProducto.cs" />
     <Compile Include="DcProductoAnwo.cs" />
+    <Compile Include="DcProductoBodega.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

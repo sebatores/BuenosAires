@@ -103,6 +103,7 @@
     <Compile Include="ScAutenticacion.cs" />
     <Compile Include="ScProducto.cs" />
     <Compile Include="ScProductoAnwo.cs" />
+    <Compile Include="ScProductoBodega.cs" />
     <Compile Include="VentanaBuscarID.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -206,6 +207,10 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BuenosAires.BusinessLayer\BuenosAires.BusinessLayer.csproj">
+      <Project>{df9bd625-1e7e-47f4-9a14-12bd02d9952b}</Project>
+      <Name>BuenosAires.BusinessLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\BuenosAires.DataLayer\BuenosAires.DataLayer.csproj">
       <Project>{D3DC5D8C-8292-4D60-B4B9-BE5EB8D51E11}</Project>
       <Name>BuenosAires.DataLayer</Name>

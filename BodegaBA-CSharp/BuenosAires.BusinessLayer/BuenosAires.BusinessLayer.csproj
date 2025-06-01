@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="BcProducto.cs" />
     <Compile Include="BcProductoAnwo.cs" />
+    <Compile Include="BcProductoBodega.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
