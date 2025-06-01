@@ -63,6 +63,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BuenosAiresEDM.edmx</DependentUpon>
     </Compile>
+    <Compile Include="DcGuiaDespacho.cs" />
     <Compile Include="DcProducto.cs" />
     <Compile Include="DcProductoAnwo.cs" />
     <Compile Include="DcProductoBodega.cs" />
