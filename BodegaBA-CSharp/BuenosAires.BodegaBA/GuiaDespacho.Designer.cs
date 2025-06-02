@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using BuenosAires.BodegaBA.
 
 
 
@@ -82,6 +81,7 @@ namespace BuenosAires.BodegaBA
             this.btnMenuPrincipal.TabIndex = 5;
             this.btnMenuPrincipal.Text = "Volver al menu principal";
             this.btnMenuPrincipal.UseVisualStyleBackColor = true;
+            this.btnMenuPrincipal.Click += new System.EventHandler(this.btnMenuPrincipal_Click);
             // 
             // lvDespacho
             // 
@@ -99,7 +99,6 @@ namespace BuenosAires.BodegaBA
             this.lvDespacho.TabIndex = 6;
             this.lvDespacho.UseCompatibleStateImageBehavior = false;
             this.lvDespacho.View = System.Windows.Forms.View.Details;
-            this.lvDespacho.SelectedIndexChanged += new System.EventHandler(this.lvDespacho_SelectedIndexChanged);
             // 
             // ColumnHeader
             // 

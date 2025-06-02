@@ -27,20 +27,17 @@ namespace BuenosAires.BusinessLayer
             this.Accion = accion;
             this.Mensaje = "";
             this.HayErrores = false;
-            this.GuiaDespacho = null;
-            this.Lista = null;
+            this.GuiaDespacho = new GuiaDespacho();
+            this.Lista = new List<GuiaDespacho>();
         }
 
-        private bool ErrCampoRequerido(string nombreCampo)
+        public void CopiarPropiedades(DcGuiaDespacho dc)
         {
-            this.Mensaje = $"{nombreCampo} es un campo requerido, por lo que debe tener un valor.";
-            return false;
-        }
-
-        private bool ErrID()
-        {
-            this.Mensaje = $"Cuando la guía de despacho es nueva el campo ID debe valer 0.";
-            return false;
+            this.Accion = dc.Accion;
+            this.Mensaje = dc.Mensaje;
+            this.HayErrores = dc.HayErrores;
+            this.GuiaDespacho = dc.GuiaDespacho;
+            this.Lista = dc.Lista;
         }
 
         public bool RetornarError(string mensaje)
@@ -50,50 +47,58 @@ namespace BuenosAires.BusinessLayer
             return false;
         }
 
+        public bool ValidarGuia(GuiaDespacho guiaDespacho)
+        {
+            if (guiaDespacho.nrogd < 0) return RetornarError($"Cuando la guia es nueva, el campo ID debe valer 0");
+            if (guiaDespacho.estadogd.Trim() == "") return RetornarError($"El estado de la guia no puede estar vacio");
+            if (guiaDespacho.idprod < 0) return RetornarError($"El producto no puede estar vacio");
+            if (guiaDespacho.nrofac < 0) return RetornarError($"La factura no puede estar facia");
+            return true;
+        }
+
         public bool RetornarMensaje(string mensaje)
         {
             this.Mensaje = mensaje;
             return false;
         }
 
-        public bool ValidarGuia(GuiaDespacho guia)
-        {
-            this.HayErrores = true;
-            if (guia.idguia < 0) return ErrID();
-            if (string.IsNullOrWhiteSpace(guia.descripcion)) return ErrCampoRequerido("Descripción de la guía de despacho");
-            // Agrega aquí más validaciones si tu clase `GuiaDespacho` tiene más campos importantes
-            this.HayErrores = false;
-            return true;
-        }
 
-        public void Crear(GuiaDespacho guia)
+        public void Crear(GuiaDespacho guiaDespacho)
         {
-            if (ValidarGuia(guia) == false) return;
+            if (ValidarGuia(guiaDespacho) == false) return;
+            var dcProd = new DcProducto();
+            dcProd.Leer(guiaDespacho.idprod);
+            if (dcProd.Producto == null)
+            {
+                RetornarError("La ID del producto debe existir con anterioridad");
+                return;
+            }
+
             var dc = new DcGuiaDespacho();
-            dc.Crear(guia);
-            Util.CopiarPropiedades(dc, this);
+            dc.Crear(guiaDespacho);
+            this.CopiarPropiedades(dc);
         }
 
         public void LeerTodos()
         {
             var dc = new DcGuiaDespacho();
             dc.LeerTodos();
-            Util.CopiarPropiedades(dc, this);
+            this.CopiarPropiedades(dc);
         }
 
         public void Leer(int id)
         {
             var dc = new DcGuiaDespacho();
             dc.Leer(id);
-            Util.CopiarPropiedades(dc, this);
+            this.CopiarPropiedades(dc);
         }
 
-        public void Actualizar(GuiaDespacho guia)
+        public void Actualizar(GuiaDespacho guiaDespacho)
         {
-            if (ValidarGuia(guia) == false) return;
+            if (ValidarGuia(guiaDespacho) == false) return;
             var dc = new DcGuiaDespacho();
-            dc.Actualizar(guia);
-            Util.CopiarPropiedades(dc, this);
+            dc.Actualizar(guiaDespacho);
+            this.CopiarPropiedades(dc);
         }
 
         
@@ -104,8 +109,15 @@ namespace BuenosAires.BusinessLayer
             var dc = new DcGuiaDespacho();
             dc.Eliminar(id);
             if (dc.HayErrores) return RetornarError(dc.Mensaje);
-            Util.CopiarPropiedades(dc, this);
+            this.CopiarPropiedades(dc);
             return true;
+        }
+
+        public void CambiarEstado(int nrogd, string estado)
+        {
+            var dc = new DcGuiaDespacho();
+            dc.CambiarEstado(nrogd, estado);
+            this.CopiarPropiedades(dc);
         }
     }
 }

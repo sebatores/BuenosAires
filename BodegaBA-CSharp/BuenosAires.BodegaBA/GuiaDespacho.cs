@@ -1,4 +1,7 @@
-﻿using System;
+﻿using BuenosAires.BodegaBA.WsGuiaDespachoReference;
+using BuenosAires.Model;
+using BuenosAires.Model.Utiles;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,11 +18,26 @@ namespace BuenosAires.BodegaBA
         public GuiaDespacho()
         {
             InitializeComponent();
+
         }
 
-        private void lvDespacho_SelectedIndexChanged(object sender, EventArgs e)
-        {
 
+        private void GuiaDespacho_Load(object sender, EventArgs e)
+        {
+            RefrescarDataGridView();
+        }
+
+
+        public void RefrescarDataGridView()
+        {
+         
+        }
+
+        private void btnMenuPrincipal_Click(object sender, EventArgs e)
+        {
+            MenuPrincipal menu = new MenuPrincipal();
+            menu.Show();
+            this.Close();
         }
     }
 }

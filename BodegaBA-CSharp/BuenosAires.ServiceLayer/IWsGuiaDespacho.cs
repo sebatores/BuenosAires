@@ -9,39 +9,33 @@ using BuenosAires.BusinessLayer;
 
 namespace BuenosAires.ServiceLayer
 {
-    // NOTA: puede usar el comando "Rename" del menú "Refactorizar" para cambiar el nombre de interfaz "IWsGuiaDespacho" en el código y en el archivo de configuración a la vez.
+
     [ServiceContract]
     public interface IWsGuiaDespacho
     {
         [OperationContract]
-        void DoWork();
+        Respuesta ObtenerRespuesta(BcGuiaDespacho bc);
+
+        [OperationContract]
+        Respuesta ValidarProducto(GuiaDespacho guiaDespacho);
+
+        [OperationContract]
+        Respuesta Crear(GuiaDespacho guiaDespacho);
+
+        [OperationContract]
+        Respuesta LeerTodos();
+
+        [OperationContract]
+        Respuesta Leer(int id);
+
+        [OperationContract]
+        Respuesta Actualizar(GuiaDespacho guiaDespacho);
+
+        [OperationContract]
+        Respuesta Eliminar(int id);
+
+        [OperationContract]
+        Respuesta CambiarEstado(int nrogd, string estado);
     }
-}
 
-[ServiceContract]
-public interface IWsGuiaDespacho
-{
-    [OperationContract]
-    Respuesta ObtenerRespuesta();
-
-    [OperationContract]
-    Respuesta ValidarProducto(GuiaDespacho guiaDespacho);
-
-    [OperationContract]
-    Respuesta Crear(GuiaDespacho guiaDespacho);
-
-    [OperationContract]
-    Respuesta LeerTodos();
-
-    [OperationContract]
-    Respuesta Leer(int id);
-
-    [OperationContract]
-    Respuesta Actualizar(GuiaDespacho guiaDespacho);
-
-    [OperationContract]
-    Respuesta Eliminar(int id);
-
-    [OperationContract]
-    Respuesta CambiarEstado(int nrogd, string estado);
 }

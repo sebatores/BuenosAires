@@ -66,6 +66,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Connected Services\WsGuiaDespachoReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\WsProductoAnwoReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -101,6 +106,7 @@
       <DependentUpon>ReservasANWO.cs</DependentUpon>
     </Compile>
     <Compile Include="ScAutenticacion.cs" />
+    <Compile Include="ScGuiaDespacho.cs" />
     <Compile Include="ScProducto.cs" />
     <Compile Include="ScProductoAnwo.cs" />
     <Compile Include="ScProductoBodega.cs" />
@@ -164,6 +170,22 @@
     <None Include="Connected Services\WsAutenticacionReference\WsAutenticacion2.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\WsGuiaDespachoReference\WsGuiaDespacho.wsdl" />
+    <None Include="Connected Services\WsGuiaDespachoReference\WsGuiaDespacho.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\WsGuiaDespachoReference\WsGuiaDespacho1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\WsGuiaDespachoReference\WsGuiaDespacho2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\WsGuiaDespachoReference\WsGuiaDespacho3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\WsGuiaDespachoReference\WsGuiaDespacho4.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\WsProductoAnwoReference\WsProductoAwno.wsdl" />
     <None Include="Connected Services\WsProductoAnwoReference\WsProductoAwno.xsd">
       <SubType>Designer</SubType>
@@ -222,6 +244,7 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\WsAutenticacionReference\" />
+    <WCFMetadataStorage Include="Connected Services\WsGuiaDespachoReference\" />
     <WCFMetadataStorage Include="Connected Services\WsProductoAnwoReference\" />
     <WCFMetadataStorage Include="Connected Services\WsProductoReference\" />
   </ItemGroup>
@@ -266,6 +289,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\WsProductoAnwoReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WsGuiaDespachoReference\WsGuiaDespacho.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WsGuiaDespachoReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WsGuiaDespachoReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\WsGuiaDespachoReference\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

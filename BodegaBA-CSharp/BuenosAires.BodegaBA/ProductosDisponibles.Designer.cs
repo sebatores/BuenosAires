@@ -67,7 +67,7 @@
             this.btnSalir.TabIndex = 4;
             this.btnSalir.Text = "Volver al menu principal";
             this.btnSalir.UseVisualStyleBackColor = true;
-            this.btnSalir.Click += new System.EventHandler(this.button1_Click);
+            this.btnSalir.Click += new System.EventHandler(this.btnSalir_Click);
             // 
             // lvBodega
             // 
