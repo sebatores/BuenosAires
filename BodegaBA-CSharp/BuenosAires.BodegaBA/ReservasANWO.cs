@@ -74,7 +74,7 @@ public partial class ReservasANWO : Form
                     prod.NroSerieAnwo,
                     prod.NomProdAnwo,
                     prod.PrecioAnwo.ToString("C"),
-                    prod.Reservado == "1" ? "sí" : "no"
+                    prod.Reservado == "S" ? "S" : "N"
                 );
             }
         }
@@ -86,39 +86,39 @@ public partial class ReservasANWO : Form
 
             if (grid.Columns[e.ColumnIndex].Name == "Opciones")
             {
-                string nroSerie = grid.Rows[e.RowIndex].Cells["NroSerie"].Value?.ToString();
+                string NroSerie = grid.Rows[e.RowIndex].Cells["NroSerie"].Value?.ToString();
 
-                if (string.IsNullOrEmpty(nroSerie))
+                if (string.IsNullOrEmpty(NroSerie))
                 {
                     MessageBox.Show("Número de serie inválido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
 
                 string reservado = grid.Rows[e.RowIndex].Cells["Reservado"].Value?.ToString();
-                if (reservado == "sí")
+                if (reservado == "S")
                 {
                     MessageBox.Show("Este producto ya está reservado.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     return;
                 }
 
                 var confirmar = MessageBox.Show(
-                    $"¿Desea reservar el producto con NroSerie {nroSerie}?",
+                    $"¿Desea reservar el producto con NroSerie {NroSerie}?",
                     "Confirmar Reserva",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question);
 
                 if (confirmar == DialogResult.Yes)
                 {
-                    ReservarProducto(nroSerie);
+                    ReservarProducto(NroSerie);
                 }
             }
         }
 
-        private void ReservarProducto(string nroSerie)
+        private void ReservarProducto(string nroserieanwo)
         {
             var sc = new ScProductoAnwo();
 
-            sc.Reservar(nroSerie);
+            sc.Reservar(nroserieanwo);
 
             if (sc.HayErrores)
             {

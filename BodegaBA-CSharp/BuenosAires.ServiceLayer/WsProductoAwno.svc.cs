@@ -30,10 +30,10 @@ namespace BuenosAires.ServiceLayer
             return ObtenerRespuesta(bc);
         }
 
-        public Respuesta Reservar(string nroSerie)
+        public Respuesta Reservar(string nroserieanwo)
         {
             var bc = new BcProductoAnwo();
-            bc.Reservar(nroSerie);
+            bc.Reservar(nroserieanwo);
             return ObtenerRespuesta(bc);
         }
 

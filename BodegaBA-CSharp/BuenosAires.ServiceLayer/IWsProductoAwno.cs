@@ -16,7 +16,7 @@ namespace BuenosAires.ServiceLayer
         Respuesta LeerTodos();
 
         [OperationContract]
-        Respuesta Reservar(string nroSerieAnwo);
+        Respuesta Reservar(string nroserieAnwo);
 
     }
 }

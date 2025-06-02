@@ -82,13 +82,13 @@ namespace BuenosAires.DataLayer
             }
         }
 
-        public void Reservar(string nroserieanwo)
+        public void Reservar(string nroSerie)
         {
-            Inicializar($"reservar el producto ANWO con nroserie '{nroserieanwo}'");
+            Inicializar($"reservar el producto ANWO con nroserie '{nroSerie}'");
             try
             {
                 var bd = new base_datosEntities();
-                var encontrado = bd.AnwoStockProducto.FirstOrDefault(p => p.nroserieanwo == nroserieanwo);
+                var encontrado = bd.AnwoStockProducto.FirstOrDefault(p => p.nroserieanwo == nroSerie);
                 if (encontrado == null)
                 {
                     this.Mensaje = $"No fue posible {Accion} pues no existe en la BD";
@@ -107,6 +107,7 @@ namespace BuenosAires.DataLayer
             {
                 this.HayErrores = true;
                 this.Mensaje = Util.MensajeError(this.Accion, $"No fue posible ", ex);
+
             }
         }
     }
