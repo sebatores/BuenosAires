@@ -1,4 +1,8 @@
+
 package buenosaires.ventaba;
+
+import buenosaires.proxy.ScAutenticacion;
+import javax.swing.JOptionPane;
 
 public class VentanaLogin extends javax.swing.JFrame {
 
@@ -15,22 +19,90 @@ public class VentanaLogin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblNombreSistema = new javax.swing.JLabel();
+        lblTituloVentana = new javax.swing.JLabel();
+        lblCuenta = new javax.swing.JLabel();
+        lblPassword = new javax.swing.JLabel();
+        txtCuenta = new javax.swing.JTextField();
+        btnIngresar = new javax.swing.JButton();
+        txtPassword = new javax.swing.JPasswordField();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Iniciar sesión");
+
+        lblNombreSistema.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblNombreSistema.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblNombreSistema.setText("Sistema Buenos Aires");
+
+        lblTituloVentana.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblTituloVentana.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTituloVentana.setText("Ingresar al Sistema de Ventas");
+
+        lblCuenta.setText("Cuenta");
+
+        lblPassword.setText("Contraseña");
+
+        btnIngresar.setText("Ingresar");
+        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 422, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(95, 95, 95)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(lblNombreSistema, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblTituloVentana, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblPassword)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtCuenta, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+                            .addComponent(txtPassword)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(lblCuenta)
+                        .addGap(2, 2, 2)
+                        .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(111, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(47, 47, 47)
+                .addComponent(lblNombreSistema)
+                .addGap(18, 18, 18)
+                .addComponent(lblTituloVentana)
+                .addGap(26, 26, 26)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCuenta)
+                    .addComponent(txtCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPassword)
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addComponent(btnIngresar)
+                .addContainerGap(56, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
+        var bc = new ScAutenticacion();
+        bc.autenticar("Vendedor", txtCuenta.getText(), txtPassword.getText());
+        if (bc.isAutenticado()){
+            VentanaStock ventana = new VentanaStock();
+            ventana.setLocationRelativeTo(null);
+            ventana.setVisible(true);
+        }
+            
+    }//GEN-LAST:event_btnIngresarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -58,6 +130,7 @@ public class VentanaLogin extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(VentanaLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -68,5 +141,12 @@ public class VentanaLogin extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnIngresar;
+    private javax.swing.JLabel lblCuenta;
+    private javax.swing.JLabel lblNombreSistema;
+    private javax.swing.JLabel lblPassword;
+    private javax.swing.JLabel lblTituloVentana;
+    private javax.swing.JTextField txtCuenta;
+    private javax.swing.JPasswordField txtPassword;
     // End of variables declaration//GEN-END:variables
 }
