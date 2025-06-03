@@ -195,6 +195,20 @@ BEGIN
 END
 """
 
+SP_ACTUALIZAR_ESTADO_GUIA_DESPACHO = """
+CREATE OR ALTER PROCEDURE [dbo].[SP_ACTUALIZAR_ESTADO_GUIA_DESPACHO]
+     @nrogd INT,
+    @nuevoEstado VARCHAR(50)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    UPDATE GuiaDespacho
+        SET estadogd = @nuevoEstado
+    WHERE nrogd = @nrogd;
+END
+"""
+
 SP_ACTUALIZAR_SOLICITUD_DE_SERVICIO = """
 CREATE OR ALTER PROCEDURE [dbo].[SP_ACTUALIZAR_SOLICITUD_DE_SERVICIO]
     @accion VARCHAR(50),
@@ -582,6 +596,11 @@ def run():
     #agregar
     try:
         exec_sql(SP_OBTENER_EQUIPOS_ANWO)
+    except:
+        pass
+    
+    try:
+        exec_sql(SP_ACTUALIZAR_ESTADO_GUIA_DESPACHO)
     except:
         pass
     

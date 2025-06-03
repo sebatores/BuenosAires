@@ -67,7 +67,6 @@ namespace BuenosAires.DataLayer
 
         }
 
-
         public int obtenerSiguienteId()
         {
             this.Inicializar("obtener un nuevo ID");
@@ -87,10 +86,6 @@ namespace BuenosAires.DataLayer
                 return -1;
             }
         }
-
-
-
-
 
         //public void Crear(GuiaDespacho guiaDespacho)
         //{
@@ -116,22 +111,6 @@ namespace BuenosAires.DataLayer
         //    }
         //}
 
-        //public void LeerTodos()
-        //{
-        //    this.Inicializar("obtener la lista de guías de despacho");
-        //    try
-        //    {
-        //        var bd = new base_datosEntities();
-        //        this.Lista = bd.GuiaDespacho.ToList();
-        //        if (this.Lista.Count == 0) this.Mensaje = "La lista de Guias de despacho se encuentra vacia";
-        //        bd.Dispose();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        this.HayErrores = true;
-        //        this.Mensaje = Util.MensajeError(this.Accion, "DcGuiaDespacho.LeerTodos", ex);
-        //    }
-        //}
 
         public void LeerTodos()
         {
