@@ -19,14 +19,14 @@ namespace BuenosAires.ServiceLayer
         [OperationContract]
         Respuesta ValidarProducto(GuiaDespacho guiaDespacho);
 
-        [OperationContract]
-        Respuesta Crear(GuiaDespacho guiaDespacho);
+        //[OperationContract]
+        //Respuesta Crear(GuiaDespacho guiaDespacho);
 
         [OperationContract]
         Respuesta LeerTodos();
 
-        [OperationContract]
-        Respuesta Leer(int id);
+        //[OperationContract]
+        //Respuesta Leer(int id);
 
         [OperationContract]
         Respuesta Actualizar(GuiaDespacho guiaDespacho);

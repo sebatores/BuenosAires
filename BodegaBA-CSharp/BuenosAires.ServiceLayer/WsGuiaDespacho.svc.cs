@@ -34,12 +34,12 @@ namespace BuenosAires.ServiceLayer
             return ObtenerRespuesta(bc);
         }
 
-        public Respuesta Crear(GuiaDespacho guiaDespacho)
-        {
-            var bc = new BcGuiaDespacho();
-            bc.Crear(guiaDespacho);
-            return ObtenerRespuesta(bc);
-        }
+        //public Respuesta Crear(GuiaDespacho guiaDespacho)
+        //{
+        //    var bc = new BcGuiaDespacho();
+        //    bc.Crear(guiaDespacho);
+        //    return ObtenerRespuesta(bc);
+        //}
 
         public Respuesta LeerTodos()
         {
@@ -49,12 +49,12 @@ namespace BuenosAires.ServiceLayer
         }
 
 
-        public Respuesta Leer(int id)
-        {
-            var bc = new BcGuiaDespacho();
-            bc.Leer(id);
-            return ObtenerRespuesta(bc);
-        }
+        //public Respuesta Leer(int id)
+        //{
+        //    var bc = new BcGuiaDespacho();
+        //    bc.Leer(id);
+        //    return ObtenerRespuesta(bc);
+        //}
 
         public Respuesta Actualizar(GuiaDespacho guiaDespacho)
         {

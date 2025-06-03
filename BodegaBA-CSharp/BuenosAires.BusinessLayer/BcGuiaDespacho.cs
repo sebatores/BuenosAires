@@ -14,8 +14,8 @@ namespace BuenosAires.BusinessLayer
         public string Accion = "";
         public string Mensaje = "";
         public bool HayErrores = false;
-        public GuiaDespacho GuiaDespacho = null;
-        public List<GuiaDespacho> Lista = null;
+        public ListaGuiaDespacho GuiaDespacho = null;
+        public List<ListaGuiaDespacho> Lista = null;
 
         public BcGuiaDespacho()
         {
@@ -27,8 +27,8 @@ namespace BuenosAires.BusinessLayer
             this.Accion = accion;
             this.Mensaje = "";
             this.HayErrores = false;
-            this.GuiaDespacho = new GuiaDespacho();
-            this.Lista = new List<GuiaDespacho>();
+            this.GuiaDespacho = new ListaGuiaDespacho();
+            this.Lista = new List<ListaGuiaDespacho>();
         }
 
         public void CopiarPropiedades(DcGuiaDespacho dc)
@@ -63,21 +63,21 @@ namespace BuenosAires.BusinessLayer
         }
 
 
-        public void Crear(GuiaDespacho guiaDespacho)
-        {
-            if (ValidarGuia(guiaDespacho) == false) return;
-            var dcProd = new DcProducto();
-            dcProd.Leer(guiaDespacho.idprod);
-            if (dcProd.Producto == null)
-            {
-                RetornarError("La ID del producto debe existir con anterioridad");
-                return;
-            }
+        //public void Crear(GuiaDespacho guiaDespacho)
+        //{
+        //    if (ValidarGuia(guiaDespacho) == false) return;
+        //    var dcProd = new DcProducto();
+        //    dcProd.Leer(guiaDespacho.idprod);
+        //    if (dcProd.Producto == null)
+        //    {
+        //        RetornarError("La ID del producto debe existir con anterioridad");
+        //        return;
+        //    }
 
-            var dc = new DcGuiaDespacho();
-            dc.Crear(guiaDespacho);
-            this.CopiarPropiedades(dc);
-        }
+        //    var dc = new DcGuiaDespacho();
+        //    dc.Crear(guiaDespacho);
+        //    this.CopiarPropiedades(dc);
+        //}
 
         public void LeerTodos()
         {
@@ -86,12 +86,12 @@ namespace BuenosAires.BusinessLayer
             this.CopiarPropiedades(dc);
         }
 
-        public void Leer(int id)
-        {
-            var dc = new DcGuiaDespacho();
-            dc.Leer(id);
-            this.CopiarPropiedades(dc);
-        }
+        //public void Leer(int id)
+        //{
+        //    var dc = new DcGuiaDespacho();
+        //    dc.Leer(id);
+        //    this.CopiarPropiedades(dc);
+        //}
 
         public void Actualizar(GuiaDespacho guiaDespacho)
         {

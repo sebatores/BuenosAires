@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace BuenosAires.BodegaBA
 {
-    partial class GuiaDespacho
+    partial class VentanaGuiaDespacho
     {
         /// <summary>
         /// Required designer variable.
@@ -43,13 +43,8 @@ namespace BuenosAires.BodegaBA
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.btnMenuPrincipal = new System.Windows.Forms.Button();
-            this.lvDespacho = new System.Windows.Forms.ListView();
-            this.ColumnHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ColumnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ColumnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ColumnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ColumnHeader4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.ColumnHeader5 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.grid = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.grid)).BeginInit();
             this.SuspendLayout();
             // 
             // label2
@@ -83,64 +78,26 @@ namespace BuenosAires.BodegaBA
             this.btnMenuPrincipal.UseVisualStyleBackColor = true;
             this.btnMenuPrincipal.Click += new System.EventHandler(this.btnMenuPrincipal_Click);
             // 
-            // lvDespacho
+            // grid
             // 
-            this.lvDespacho.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.ColumnHeader,
-            this.ColumnHeader1,
-            this.ColumnHeader2,
-            this.ColumnHeader3,
-            this.ColumnHeader4,
-            this.ColumnHeader5});
-            this.lvDespacho.HideSelection = false;
-            this.lvDespacho.Location = new System.Drawing.Point(12, 105);
-            this.lvDespacho.Name = "lvDespacho";
-            this.lvDespacho.Size = new System.Drawing.Size(854, 351);
-            this.lvDespacho.TabIndex = 6;
-            this.lvDespacho.UseCompatibleStateImageBehavior = false;
-            this.lvDespacho.View = System.Windows.Forms.View.Details;
+            this.grid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grid.Location = new System.Drawing.Point(32, 112);
+            this.grid.Name = "grid";
+            this.grid.Size = new System.Drawing.Size(813, 344);
+            this.grid.TabIndex = 6;
             // 
-            // ColumnHeader
-            // 
-            this.ColumnHeader.Text = "Nro Despacho";
-            this.ColumnHeader.Width = 137;
-            // 
-            // ColumnHeader1
-            // 
-            this.ColumnHeader1.Text = "Producto";
-            this.ColumnHeader1.Width = 136;
-            // 
-            // ColumnHeader2
-            // 
-            this.ColumnHeader2.Text = "Estado GD";
-            this.ColumnHeader2.Width = 140;
-            // 
-            // ColumnHeader3
-            // 
-            this.ColumnHeader3.Text = "Nro Factura";
-            this.ColumnHeader3.Width = 107;
-            // 
-            // ColumnHeader4
-            // 
-            this.ColumnHeader4.Text = "Cliente";
-            this.ColumnHeader4.Width = 142;
-            // 
-            // ColumnHeader5
-            // 
-            this.ColumnHeader5.Text = "Opciones";
-            this.ColumnHeader5.Width = 550;
-            // 
-            // GuiaDespacho
+            // VentanaGuiaDespacho
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(878, 518);
-            this.Controls.Add(this.lvDespacho);
+            this.Controls.Add(this.grid);
             this.Controls.Add(this.btnMenuPrincipal);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Name = "GuiaDespacho";
+            this.Name = "VentanaGuiaDespacho";
             this.Text = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.grid)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -151,12 +108,6 @@ namespace BuenosAires.BodegaBA
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnMenuPrincipal;
-        private System.Windows.Forms.ListView lvDespacho;
-        private System.Windows.Forms.ColumnHeader ColumnHeader;
-        private System.Windows.Forms.ColumnHeader ColumnHeader1;
-        private System.Windows.Forms.ColumnHeader ColumnHeader2;
-        private System.Windows.Forms.ColumnHeader ColumnHeader3;
-        private System.Windows.Forms.ColumnHeader ColumnHeader4;
-        private System.Windows.Forms.ColumnHeader ColumnHeader5;
+        private DataGridView grid;
     }
 }

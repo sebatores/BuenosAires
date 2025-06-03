@@ -96,6 +96,7 @@
     <Compile Include="GuiaDespacho.cs">
       <DependentUpon>BuenosAiresEDM.tt</DependentUpon>
     </Compile>
+    <Compile Include="ListaGuiaDespacho.cs" />
     <Compile Include="PerfilUsuario.cs">
       <DependentUpon>BuenosAiresEDM.tt</DependentUpon>
     </Compile>

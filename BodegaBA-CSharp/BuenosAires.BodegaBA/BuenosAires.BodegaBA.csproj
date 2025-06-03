@@ -93,11 +93,11 @@
     <Compile Include="ProductosDisponibles.Designer.cs">
       <DependentUpon>ProductosDisponibles.cs</DependentUpon>
     </Compile>
-    <Compile Include="GuiaDespacho.cs">
+    <Compile Include="VentanaGuiaDespacho.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="GuiaDespacho.Designer.cs">
-      <DependentUpon>GuiaDespacho.cs</DependentUpon>
+    <Compile Include="VentanaGuiaDespacho.Designer.cs">
+      <DependentUpon>VentanaGuiaDespacho.cs</DependentUpon>
     </Compile>
     <Compile Include="ReservasANWO.cs">
       <SubType>Form</SubType>
@@ -130,8 +130,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="GuiaDespacho.resx">
-      <DependentUpon>GuiaDespacho.cs</DependentUpon>
+    <EmbeddedResource Include="VentanaGuiaDespacho.resx">
+      <DependentUpon>VentanaGuiaDespacho.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MenuPrincipal.resx">
       <DependentUpon>MenuPrincipal.cs</DependentUpon>

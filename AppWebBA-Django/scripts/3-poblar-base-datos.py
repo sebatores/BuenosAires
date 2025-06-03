@@ -143,7 +143,6 @@ BEGIN
 
     SET NOCOUNT ON;
     
-    
     IF (@tipousu = 'Cliente')
     BEGIN
         SELECT
@@ -176,6 +175,21 @@ BEGIN
         FROM FACTURA fac
         LEFT JOIN GuiaDespacho gd ON fac.nrofac = gd.nrofac
         ORDER BY fac.nrofac
+    END
+    ELSE IF (@tipousu = 'Bodeguero')
+    BEGIN
+        SELECT
+            gd.nrogd,
+            p.nomprod,
+            gd.estadogd,
+			gd.nrofac,
+			usucli.first_name + ' '  + usucli.last_name AS nomcli
+        FROM GuiaDespacho gd
+        LEFT JOIN Producto p ON p.idprod = gd.idprod
+		LEFT JOIN Factura f ON f.idprod = gd.idprod
+		INNER JOIN PerfilUsuario      percli ON f.rutcli = percli.rut
+        INNER JOIN auth_user          usucli ON percli.user_id =  usucli.id
+        ORDER BY gd.nrogd
     END
 
 END

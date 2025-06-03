@@ -28,7 +28,7 @@ namespace BuenosAires.BodegaBA
          
         private void btnAdministrarDespacho_click(object sender, EventArgs e)
         {
-            GuiaDespacho ventana = new GuiaDespacho();
+            VentanaGuiaDespacho ventana = new VentanaGuiaDespacho();
             ventana.Show();
             this.Hide();
 

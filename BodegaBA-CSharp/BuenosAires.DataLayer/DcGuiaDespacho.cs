@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using BuenosAires.Model;
 using BuenosAires.Model.Utiles;
@@ -11,8 +12,8 @@ namespace BuenosAires.DataLayer
         public string Accion = "";
         public string Mensaje = "";
         public bool HayErrores = false;
-        public GuiaDespacho GuiaDespacho = null;
-        public List<GuiaDespacho> Lista = null;
+        public ListaGuiaDespacho GuiaDespacho = null;
+        public List<ListaGuiaDespacho> Lista = null;
 
         public DcGuiaDespacho()
         {
@@ -91,29 +92,29 @@ namespace BuenosAires.DataLayer
 
 
 
-        public void Crear(GuiaDespacho guiaDespacho)
-        {
-            this.Inicializar($"crear la guía de despacho '{this.obtenerSiguienteId()}'");
-            try
-            {
+        //public void Crear(GuiaDespacho guiaDespacho)
+        //{
+        //    this.Inicializar($"crear la guía de despacho '{this.obtenerSiguienteId()}'");
+        //    try
+        //    {
 
-                var bd = new base_datosEntities();
-                int siguienteId = this.obtenerSiguienteId();
-                if (this.HayErrores) return;
+        //        var bd = new base_datosEntities();
+        //        int siguienteId = this.obtenerSiguienteId();
+        //        if (this.HayErrores) return;
 
-                guiaDespacho.nrogd = siguienteId;
-                bd.GuiaDespacho.Add(guiaDespacho);
-                bd.SaveChanges();
-                this.GuiaDespacho = guiaDespacho;
-                this.Mensaje = $"La guía de despacho '{guiaDespacho.nrogd}' fue creada correctamente";
+        //        guiaDespacho.nrogd = siguienteId;
+        //        bd.GuiaDespacho.Add(guiaDespacho);
+        //        bd.SaveChanges();
+        //        this.GuiaDespacho = guiaDespacho;
+        //        this.Mensaje = $"La guía de despacho '{guiaDespacho.nrogd}' fue creada correctamente";
 
-            }
-            catch (Exception ex)
-            {
-                this.HayErrores = true;
-                this.Mensaje = Util.MensajeError(this.Accion, "DcGuiaDespacho.Crear", ex);
-            }
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        this.HayErrores = true;
+        //        this.Mensaje = Util.MensajeError(this.Accion, "DcGuiaDespacho.Crear", ex);
+        //    }
+        //}
 
         //public void LeerTodos()
         //{
@@ -140,13 +141,17 @@ namespace BuenosAires.DataLayer
                 using (var bd = new base_datosEntities())
                 {
                     Lista = bd.Database
-                        .SqlQuery<GuiaDespacho>("EXEC SP_OBTENER_GUIAS_DE_DESPACHO")
+                        .SqlQuery<ListaGuiaDespacho>(
+                            "EXEC SP_OBTENER_GUIAS_DE_DESPACHO @tipousu, @rut",
+                            new SqlParameter("@tipousu", "Bodeguero"),
+                            new SqlParameter("@rut", "0000-0")
+                        )
                         .ToList();
 
                     if (Lista.Count == 0)
-                        this.Mensaje = "La lista de Guias de despacho se encuentra vacia";
+                        this.Mensaje = "La lista de Guías de despacho se encuentra vacía";
                     else
-                        this.Mensaje = $"Se encontraron {Lista.Count} guias de despacho";
+                        this.Mensaje = $"Se encontraron {Lista.Count} guías de despacho";
                 }
             }
             catch (Exception ex)
@@ -157,25 +162,25 @@ namespace BuenosAires.DataLayer
         }
 
 
-        public void Leer(int idguia)
-        {
-            this.Inicializar($"obtener la guía de despacho con el ID '{idguia}'");
-            try
-            {
-                using (var bd = new base_datosEntities())
-                {
-                    this.GuiaDespacho = bd.GuiaDespacho.FirstOrDefault(p => p.nrogd == idguia);
-                    bd.Dispose();
-                    if (this.GuiaDespacho == null)
-                        this.Mensaje = $"No fue posible {this.Accion} pues no existe en la BD";
-                }
-            }
-            catch (Exception ex)
-            {
-                this.HayErrores = true;
-                this.Mensaje = Util.MensajeError(this.Accion, "DcGuiaDespacho.Leer", ex);
-            }
-        }
+        //public void Leer(int idguia)
+        //{
+        //    this.Inicializar($"obtener la guía de despacho con el ID '{idguia}'");
+        //    try
+        //    {
+        //        using (var bd = new base_datosEntities())
+        //        {
+        //            this.GuiaDespacho = bd..FirstOrDefault(p => p.nrogd == idguia);
+        //            bd.Dispose();
+        //            if (this.GuiaDespacho == null)
+        //                this.Mensaje = $"No fue posible {this.Accion} pues no existe en la BD";
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        this.HayErrores = true;
+        //        this.Mensaje = Util.MensajeError(this.Accion, "DcGuiaDespacho.Leer", ex);
+        //    }
+        //}
 
         public void Actualizar(GuiaDespacho guiaDespacho)
         {
@@ -193,7 +198,7 @@ namespace BuenosAires.DataLayer
                 {
                     Util.CopiarPropiedades(guiaDespacho, encontrado);
                     bd.SaveChanges();
-                    this.GuiaDespacho = new GuiaDespacho();
+                    this.GuiaDespacho = new ListaGuiaDespacho();
                     Util.CopiarPropiedades(guiaDespacho, this.GuiaDespacho);
                     this.Mensaje = $"La guía de despacho '{guiaDespacho.nrogd}' fue actualizada correctamente";
                 }

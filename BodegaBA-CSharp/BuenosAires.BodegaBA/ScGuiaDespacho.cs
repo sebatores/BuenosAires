@@ -8,23 +8,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BuenosAires.BodegaBA
+namespace BuenosAires.ServiceProxy
 {
-    internal class ScGuiaDespacho
+    public class ScGuiaDespacho
     {
         public string Accion = "";
         public string Mensaje = "";
         public bool HayErrores = false;
-        public GuiaDespacho GuiaDespacho = null;
-        public List<GuiaDespacho> Lista = null;
+        public ListaGuiaDespacho GuiaDespacho = null;
+        public List<ListaGuiaDespacho> Lista = null;
 
         public void CopiarPropiedades(Respuesta resp)
         {
             this.Accion = resp.Accion;
             this.Mensaje = resp.Mensaje;
             this.HayErrores = resp.HayErrores;
-            this.GuiaDespacho = Util.DeserializarXML<GuiaDespacho>(resp.XmlGuiaDespacho);
-            this.Lista = Util.DeserializarXML<List<GuiaDespacho>>(resp.XmlListaGuiaDespacho);
+            this.GuiaDespacho = Util.DeserializarXML<ListaGuiaDespacho>(resp.XmlGuiaDespacho);
+            this.Lista = Util.DeserializarXML<List<ListaGuiaDespacho>>(resp.XmlListaGuiaDespacho);
         }
 
         public WsGuiaDespachoClient getWs()
